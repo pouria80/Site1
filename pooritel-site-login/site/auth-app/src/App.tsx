@@ -6,10 +6,6 @@ import LangDropdown from "./components/LangDropdown";
 import ThemeToggle, { type Theme } from "./components/ThemeToggle";
 import { GemMark } from "./components/icons";
 
-/**
- * صفحهٔ کامل دروازهٔ ورود — قابل mount در هر روتر.
- * برای اتصال به بک‌اند واقعی، props مربوط به AuthCard را در این فایل پاس دهید.
- */
 export function AuthGateway(authProps: AuthCardProps = {}) {
   const { t } = useI18n();
   const [reduced] = useState(
@@ -45,9 +41,7 @@ export function AuthGateway(authProps: AuthCardProps = {}) {
 
   return (
     <div className="app-shell">
-      {/* one seamless arcane scene — sorcerer + arena, edge to edge */}
       <div className={`bg-scene${heroState}`} aria-hidden="true" />
-      {/* soft ground fog over the scene floor */}
       <div className="ground-fog" aria-hidden="true" />
       <div className="bg-glow g-a" aria-hidden="true" />
       <div className="bg-glow g-b" aria-hidden="true" />
@@ -87,44 +81,62 @@ export function AuthGateway(authProps: AuthCardProps = {}) {
   );
 }
 
+async function authRequest(path: string, payload: Record<string, unknown>) {
+  const response = await fetch(path, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  let data: { success?: boolean; error?: string } = {};
+  try {
+    data = await response.json();
+  } catch {
+    // Keep the HTTP status as the fallback error.
+  }
+
+  if (!response.ok || !data.success) {
+    throw new Error(data.error || "Authentication request failed.");
+  }
+
+  return data;
+}
+
 export default function App() {
   const handleAuth: AuthCardProps["onAuth"] = async (payload) => {
-    const identifier = payload.email || payload.phone || "member";
-    const session = {
-      authenticated: true,
-      identifier,
-      method: payload.method,
-      mode: payload.mode,
-      loginAt: new Date().toISOString(),
-    };
-    try {
-      localStorage.setItem("pooritel_session", JSON.stringify(session));
-    } catch {
-      /* storage unavailable — navigation still works */
+    if (payload.method !== "email" || !payload.email || !payload.password) {
+      throw new Error("Phone OTP is not enabled yet. Use Email + Password for now.");
     }
-    // Give the success animation a moment, then return to the marketplace home.
+
+    await authRequest(
+      payload.mode === "register" ? "/api/auth/register" : "/api/auth/login",
+      {
+        email: payload.email,
+        password: payload.password,
+      }
+    );
+
     window.setTimeout(() => window.location.assign("/"), 900);
   };
 
-  const handleSocial: AuthCardProps["onSocial"] = async (provider) => {
-    const session = {
-      authenticated: true,
-      provider,
-      identifier: provider,
-      mode: "login",
-      loginAt: new Date().toISOString(),
-    };
-    try {
-      localStorage.setItem("pooritel_session", JSON.stringify(session));
-    } catch {
-      /* storage unavailable — navigation still works */
-    }
-    window.setTimeout(() => window.location.assign("/"), 900);
+  const handleSocial: AuthCardProps["onSocial"] = async () => {
+    throw new Error("This sign-in method will be enabled in the next auth phase.");
+  };
+
+  const handleSendCode: AuthCardProps["onSendCode"] = async () => {
+    throw new Error("Phone OTP will be enabled in the next auth phase.");
   };
 
   return (
     <I18nProvider>
-      <AuthGateway onAuth={handleAuth} onSocial={handleSocial} />
+      <AuthGateway
+        onAuth={handleAuth}
+        onSocial={handleSocial}
+        onSendCode={handleSendCode}
+      />
     </I18nProvider>
   );
 }

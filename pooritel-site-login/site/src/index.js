@@ -128,12 +128,12 @@ async function openDb(env) {
   return client;
 }
 
-async function createSession(client, userId) {
+async function createSession(client, userId, inTransaction = false) {
   const token = base64Url(randomBytes(32));
   const tokenHash = await createTokenHash(token);
   const expiresAt = new Date(Date.now() + SESSION_TTL_MS);
 
-  await client.query("BEGIN");
+  if (!inTransaction) await client.query("BEGIN");
   try {
     await client.query(
       `UPDATE user_sessions
@@ -147,10 +147,10 @@ async function createSession(client, userId) {
            WHERE user_id = $1
              AND revoked_at IS NULL
              AND expires_at > NOW()
-           ORDER BY created_at DESC
-           OFFSET 1
+           ORDER BY created_at ASC
+           OFFSET $2
          )`,
-      [userId]
+      [userId, Math.max(0, MAX_ACTIVE_SESSIONS - 1)]
     );
 
     await client.query(
@@ -160,10 +160,10 @@ async function createSession(client, userId) {
       [userId, tokenHash, "browser", null, expiresAt]
     );
 
-    await client.query("COMMIT");
+    if (!inTransaction) await client.query("COMMIT");
     return { token, expiresAt };
   } catch (error) {
-    await client.query("ROLLBACK");
+    if (!inTransaction) await client.query("ROLLBACK");
     throw error;
   }
 }
@@ -179,7 +179,7 @@ async function registerEmail(request, env) {
   const email = normalizeEmail(body?.email);
   const password = String(body?.password || "");
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+  if (!/^\S+@\S+\.\S{2,}$/.test(email)) {
     return json({ success: false, error: "Invalid email address." }, 400);
   }
 
@@ -187,8 +187,10 @@ async function registerEmail(request, env) {
     return json({ success: false, error: "Password must be at least 6 characters." }, 400);
   }
 
-  const client = await openDb(env);
+  let client;
   try {
+    client = await openDb(env);
+
     const existing = await client.query(
       `SELECT id
        FROM auth_accounts
@@ -208,26 +210,26 @@ async function registerEmail(request, env) {
       const userResult = await client.query(
         `INSERT INTO users (status)
          VALUES ('active')
-         RETURNING id, created_at`
+         RETURNING id`
       );
-      const user = userResult.rows[0];
+      const userId = userResult.rows[0].id;
 
       await client.query(
         `INSERT INTO auth_accounts
           (user_id, provider, email, password_hash)
          VALUES ($1, 'email', $2, $3)`,
-        [user.id, email, passwordHash]
+        [userId, email, passwordHash]
       );
 
-      await client.query("COMMIT");
+      const session = await createSession(client, userId, true);
 
-      const session = await createSession(client, user.id);
+      await client.query("COMMIT");
 
       return json(
         {
           success: true,
           user: {
-            id: user.id,
+            id: userId,
             email,
             emailVerified: false,
           },
@@ -236,14 +238,25 @@ async function registerEmail(request, env) {
         { "Set-Cookie": sessionCookie(session.token) }
       );
     } catch (error) {
-      await client.query("ROLLBACK");
-      throw error;
+      try {
+        await client.query("ROLLBACK");
+      } catch {
+        // Preserve the original error.
+      }
+      console.error("Register error:", error);
+      return json({ success: false, error: "Unable to create account right now." }, 500);
     }
   } catch (error) {
-    console.error("Register error:", error);
+    console.error("Register connection error:", error);
     return json({ success: false, error: "Unable to create account right now." }, 500);
   } finally {
-    await client.end();
+    if (client) {
+      try {
+        await client.end();
+      } catch {
+        // Ignore connection close errors.
+      }
+    }
   }
 }
 
@@ -258,8 +271,9 @@ async function loginEmail(request, env) {
   const email = normalizeEmail(body?.email);
   const password = String(body?.password || "");
 
-  const client = await openDb(env);
+  let client;
   try {
+    client = await openDb(env);
     const result = await client.query(
       `SELECT u.id, u.status, a.password_hash, a.email, a.verified_at
        FROM auth_accounts a
@@ -279,7 +293,7 @@ async function loginEmail(request, env) {
       return json({ success: false, error: `Account is ${account.status}.` }, 403);
     }
 
-    const session = await createSession(client, account.id);
+    const session = await createSession(client, account.id, false);
 
     return json(
       {
@@ -297,7 +311,13 @@ async function loginEmail(request, env) {
     console.error("Login error:", error);
     return json({ success: false, error: "Unable to sign in right now." }, 500);
   } finally {
-    await client.end();
+    if (client) {
+      try {
+        await client.end();
+      } catch {
+        // Ignore connection close errors.
+      }
+    }
   }
 }
 
@@ -305,8 +325,9 @@ async function logout(request, env) {
   const token = getSessionToken(request);
   if (!token) return json({ success: true }, 200, { "Set-Cookie": clearSessionCookie() });
 
-  const client = await openDb(env);
+  let client;
   try {
+    client = await openDb(env);
     const tokenHash = await createTokenHash(token);
     await client.query(
       `UPDATE user_sessions
@@ -317,7 +338,13 @@ async function logout(request, env) {
     );
     return json({ success: true }, 200, { "Set-Cookie": clearSessionCookie() });
   } finally {
-    await client.end();
+    if (client) {
+      try {
+        await client.end();
+      } catch {
+        // Ignore connection close errors.
+      }
+    }
   }
 }
 

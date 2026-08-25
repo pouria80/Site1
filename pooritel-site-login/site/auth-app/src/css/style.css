@@ -1,0 +1,927 @@
+/* ============================================================
+   PooriTel — global tokens & site chrome
+   Dual theme: light (default) + dark arcane (Invoker-inspired)
+   Toggle via <html data-theme="dark|light">
+   ============================================================ */
+
+:root {
+  --bg: #edf1eb;
+  --surface: #f8faf7;
+  --surface-soft: #e7ede4;
+  --text: #172017;
+  --muted: #697466;
+
+  --sage: #7d9f70;
+  --sage-dark: #557449;
+  --sage-light: #b8cea9;
+  --gold: #d5ae63;
+  --cyan: #00c8d8;
+  --cyan-soft: rgba(0, 200, 216, 0.1);
+  --cyan-line: rgba(0, 200, 216, 0.25);
+  --cyan-glow: rgba(0, 200, 216, 0.22);
+  --line: rgba(54, 74, 52, 0.12);
+
+  --cyan-ink: #0a7583;
+  --gold-ink: #8a6a2c;
+  --danger: #a8503f;
+
+  --shadow-card:
+    0 34px 90px rgba(31, 53, 35, 0.11),
+    0 12px 32px rgba(31, 53, 35, 0.06),
+    0 0 44px rgba(0, 200, 216, 0.05);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --core-size: 112px;
+
+  /* theme-aware scene tokens (light values) */
+  --glow-a: rgba(184, 206, 169, 0.34);
+  --glow-b: rgba(0, 200, 216, 0.12);
+  --grid-a: rgba(0, 200, 216, 0.05);
+  --grid-b: rgba(85, 116, 73, 0.045);
+  --scene-op: 0.48;
+  --grain-blend: multiply;
+  --mist: rgba(240, 245, 240, 0.5);
+  --aura-a: rgba(125, 159, 112, 0.15);
+  --aura-b: rgba(0, 200, 216, 0.1);
+  --panel: rgba(255, 255, 255, 0.74);
+  --panel-strong: rgba(255, 255, 255, 0.94);
+  --panel-shadow: 0 18px 46px rgba(31, 53, 35, 0.15);
+  --tag-en: var(--muted);
+  --brand-glow: 0 0 0 rgba(213, 174, 99, 0);
+}
+
+:root[data-theme="dark"] {
+  --bg: #0a0e18;
+  --surface: #101828;
+  --surface-soft: #172032;
+  --text: #e9e6dc;
+  --muted: #96a1b5;
+
+  --sage: #7d9f70;
+  --sage-dark: #9dbb8f;
+  --sage-light: #b8cea9;
+  --gold: #d5ae63;
+  --cyan: #00c8d8;
+  --cyan-soft: rgba(0, 200, 216, 0.12);
+  --cyan-line: rgba(0, 200, 216, 0.32);
+  --cyan-glow: rgba(0, 200, 216, 0.22);
+  --line: rgba(213, 174, 99, 0.18);
+
+  --cyan-ink: #63d8e4;
+  --gold-ink: #e3c078;
+  --danger: #e2705c;
+
+  --shadow-card: 0 34px 90px rgba(2, 5, 12, 0.55);
+
+  --glow-a: rgba(0, 200, 216, 0.1);
+  --glow-b: rgba(213, 174, 99, 0.1);
+  --grid-a: rgba(213, 174, 99, 0.05);
+  --grid-b: rgba(0, 200, 216, 0.045);
+  --scene-op: 0.62;
+  --grain-blend: overlay;
+  --mist: rgba(8, 12, 22, 0.62);
+  --aura-a: rgba(0, 200, 216, 0.13);
+  --aura-b: rgba(213, 174, 99, 0.11);
+  --panel: rgba(13, 19, 33, 0.66);
+  --panel-strong: rgba(15, 22, 38, 0.92);
+  --panel-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
+  --tag-en: var(--gold-ink);
+  --brand-glow: 0 0 22px rgba(0, 200, 216, 0.16);
+}
+
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  background:
+    radial-gradient(1100px 700px at 12% -8%, rgba(125, 159, 112, 0.2), transparent 60%),
+    radial-gradient(920px 640px at 90% 10%, rgba(0, 200, 216, 0.1), transparent 55%),
+    radial-gradient(780px 580px at 80% 94%, rgba(213, 174, 99, 0.14), transparent 62%),
+    linear-gradient(135deg, var(--bg), var(--surface));
+  background-attachment: fixed;
+  transition: color 0.4s var(--ease-out);
+}
+
+:root[data-theme="dark"] body {
+  background:
+    radial-gradient(1100px 720px at 14% -10%, rgba(0, 200, 216, 0.13), transparent 60%),
+    radial-gradient(940px 660px at 88% 8%, rgba(213, 174, 99, 0.12), transparent 56%),
+    radial-gradient(820px 620px at 78% 96%, rgba(125, 159, 112, 0.1), transparent 62%),
+    radial-gradient(700px 560px at 8% 92%, rgba(224, 151, 63, 0.08), transparent 60%),
+    linear-gradient(160deg, #0b1120 0%, var(--bg) 46%, #0a0d16 100%);
+  background-attachment: fixed;
+}
+
+/* language-driven font pairing: Vazirmatn (FA) / Inter (EN + numerals) */
+html[lang="fa"] body {
+  font-family: "Vazirmatn", "Inter", "Segoe UI", Tahoma, sans-serif;
+}
+html[lang="en"] body {
+  font-family: "Inter", "Vazirmatn", "Segoe UI", Tahoma, sans-serif;
+}
+
+.num,
+input[dir="ltr"] {
+  font-family: "Inter", "Vazirmatn", sans-serif;
+}
+
+/* arcane display face for brand / titles (Latin script) */
+.display {
+  font-family: "Cinzel", "Vazirmatn", "Inter", serif;
+}
+
+::selection {
+  background: rgba(0, 200, 216, 0.26);
+}
+
+button {
+  font-family: inherit;
+}
+
+a {
+  color: var(--cyan-ink);
+}
+
+:focus-visible {
+  outline: 2px solid rgba(0, 200, 216, 0.55);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ------------------------------------------------------------
+   Ambient living background
+   ------------------------------------------------------------ */
+
+/* ------------------------------------------------------------
+   One seamless arcane scene — the sorcerer and his arena are a
+   single full-bleed painting that runs edge to edge. No panels,
+   no wings, no seams. The three live orbs hover above him.
+   ------------------------------------------------------------ */
+.bg-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("/assets/login-background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center 60%;
+  opacity: var(--scene-op);
+  animation: sceneBreath 26s ease-in-out infinite alternate;
+  transition: opacity 0.9s var(--ease-out), filter 0.9s var(--ease-out);
+}
+@keyframes sceneBreath {
+  from { transform: scale(1) translate3d(0, 0, 0); }
+  to   { transform: scale(1.045) translate3d(0, -0.8%, 0); }
+}
+/* crisp and present in light mode, with a gentle cinematic grade */
+:root:not([data-theme="dark"]) .bg-scene {
+  filter: saturate(1.05) contrast(1.06) brightness(1.07);
+}
+/* he channels — the whole scene leans in and glows */
+.bg-scene.channeling {
+  opacity: calc(var(--scene-op) * 1.35);
+  filter: brightness(1.16) saturate(1.2);
+}
+:root:not([data-theme="dark"]) .bg-scene.channeling {
+  filter: brightness(1.1) saturate(1.1) contrast(1.06);
+}
+/* gateway opened — the scene recedes, softly out of focus */
+.bg-scene.settled {
+  opacity: calc(var(--scene-op) * 0.42);
+  filter: blur(3px) saturate(0.82);
+}
+
+/* soft arcane ground mist over the scene floor — one gentle layer */
+.ground-fog {
+  position: fixed;
+  left: -5%;
+  right: -5%;
+  bottom: 0;
+  height: 26vh;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 90% at 28% 100%, var(--mist) 0%, transparent 62%),
+    radial-gradient(ellipse 55% 85% at 74% 100%, var(--mist) 0%, transparent 60%),
+    linear-gradient(180deg, transparent 0%, var(--mist) 82%);
+  filter: blur(8px);
+  animation: fogSway 30s ease-in-out infinite alternate;
+  transition: opacity 1s var(--ease-out);
+}
+@keyframes fogSway {
+  from { transform: translateX(-1.4%); }
+  to   { transform: translateX(1.4%); }
+}
+
+/* ------------------------------------------------------------
+   The three conjured orbs — Quas (ice) / Wex (storm) / Exort
+   (fire), faithful to the game. Each is a rich living sphere
+   with a glossy skin and an elemental heart: a breathing frost
+   mist, a crackling electric field, or a licking flame — no
+   rings or lines, just pure energy bleeding off the sphere.
+   ------------------------------------------------------------ */
+.orb {
+  position: absolute;
+  width: clamp(34px, 4.2vw, 52px);
+  height: clamp(34px, 4.2vw, 52px);
+  border-radius: 50%;
+  background:
+    /* glossy specular hotspot */
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.98) 0 9%, rgba(255, 255, 255, 0.32) 22%, transparent 34%),
+    /* secondary sheen on the upper rim */
+    radial-gradient(circle at 50% 8%, var(--orb-rim) 0 12%, transparent 30%),
+    /* deep shade on the lower body */
+    radial-gradient(circle at 66% 82%, var(--orb-deep) 0 40%, transparent 62%),
+    /* main sphere body */
+    radial-gradient(circle at 44% 42%, var(--orb-mid) 0 55%, var(--orb-deep) 92%);
+  box-shadow:
+    /* outer halo bloom */
+    0 0 14px var(--orb-glow),
+    0 0 42px var(--orb-glow),
+    0 0 90px var(--orb-glow-soft),
+    /* crisp contact ring */
+    0 0 0 1px var(--orb-line),
+    /* depth: dark occluded base + lit top rim */
+    inset 0 -9px 18px rgba(3, 6, 14, 0.55),
+    inset 0 6px 12px rgba(255, 255, 255, 0.28);
+  filter: drop-shadow(0 6px 18px var(--orb-glow-soft));
+  animation: orbFloat 9s ease-in-out infinite;
+  transition:
+    transform 0.7s var(--ease-out),
+    opacity 0.7s var(--ease-out),
+    filter 0.7s var(--ease-out),
+    box-shadow 0.7s var(--ease-out);
+  will-change: transform, translate;
+}
+
+/* the elemental heart of each orb — saturated, lit from the top so
+   the glyph inside stays readable against it */
+.orb::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 74%;
+  height: 74%;
+  margin: -37% 0 0 -37%;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+  z-index: 1;
+}
+
+/* — Quas: ice — slow-turning frost blades in a cold teal body — */
+.orb-c::before {
+  background:
+    conic-gradient(
+      from 20deg,
+      transparent 0 30deg,
+      rgba(234, 252, 255, 0.5) 52deg,
+      transparent 78deg,
+      rgba(190, 240, 250, 0.4) 130deg,
+      transparent 160deg,
+      rgba(234, 252, 255, 0.45) 210deg,
+      transparent 240deg,
+      rgba(190, 240, 250, 0.38) 300deg,
+      transparent 330deg
+    ),
+    radial-gradient(circle at 50% 42%, rgba(240, 253, 255, 0.5) 0 12%, #7fdcf0 34%, #2ba6c9 60%, rgba(20, 120, 156, 0.5) 76%, transparent 82%);
+  filter: blur(0.6px) drop-shadow(0 0 10px rgba(120, 220, 240, 0.8));
+  animation: iceShimmer 11s linear infinite;
+}
+@keyframes iceShimmer {
+  0%, 100% { transform: scale(0.92) rotate(0deg);    opacity: 0.7; }
+  50%      { transform: scale(1.05) rotate(180deg); opacity: 0.95; }
+}
+
+/* — Wex: storm — thin filaments over a violet plasma body — */
+.orb-s::before {
+  background:
+    conic-gradient(
+      from 60deg,
+      transparent 0 40deg, rgba(240, 226, 255, 0.5) 46deg, transparent 60deg,
+      transparent 150deg, rgba(220, 190, 255, 0.42) 156deg, transparent 170deg,
+      transparent 262deg, rgba(240, 226, 255, 0.46) 268deg, transparent 282deg
+    ),
+    radial-gradient(circle at 50% 42%, rgba(246, 238, 255, 0.5) 0 10%, #b98bf0 34%, #7c46cf 60%, rgba(87, 48, 159, 0.5) 76%, transparent 82%);
+  filter: blur(0.8px) drop-shadow(0 0 11px rgba(168, 122, 236, 0.9));
+  animation: stormFlicker 3.8s linear infinite;
+}
+@keyframes stormFlicker {
+  0%, 100% { opacity: 0.6;  transform: scale(0.9); }
+  7%   { opacity: 0.95; transform: scale(1.1); }
+  11%  { opacity: 0.5;  transform: scale(0.93); }
+  16%  { opacity: 0.9;  transform: scale(1.03); }
+  24%  { opacity: 0.65; transform: scale(0.92); }
+  52%  { opacity: 0.95; transform: scale(1.06); }
+  58%  { opacity: 0.6;  transform: scale(0.94); }
+  80%  { opacity: 0.85; transform: scale(1.0); }
+}
+
+/* — Exort: fire — a molten body with a white-hot belly, flames kept to the rim — */
+.orb-g::before {
+  background:
+    radial-gradient(circle at 50% 66%, rgba(255, 246, 220, 0.6) 0 12%, #ffcf7d 30%, #ff8a3c 54%, rgba(214, 74, 18, 0.55) 72%, transparent 82%),
+    radial-gradient(circle at 36% 34%, rgba(255, 196, 86, 0.5) 0 14%, transparent 40%),
+    radial-gradient(circle at 66% 30%, rgba(255, 140, 50, 0.45) 0 12%, transparent 38%);
+  filter: blur(1px) drop-shadow(0 0 12px rgba(255, 138, 60, 0.85));
+  transform-origin: 50% 62%;
+  animation: flameDance 2.8s ease-in-out infinite;
+}
+@keyframes flameDance {
+  0%, 100% { transform: scale(0.94) rotate(-1.5deg); opacity: 0.8; }
+  25%      { transform: scale(1.05) rotate(1.5deg);  opacity: 0.95; }
+  50%      { transform: scale(0.98) rotate(-0.5deg); opacity: 0.85; }
+  75%      { transform: scale(1.08) rotate(2deg);    opacity: 1; }
+}
+
+/* the outer elemental signature — the sphere wears its element:
+   frost spikes / hopping arcs / a flame corona, all band-masked
+   around the rim so nothing reads as a plain ring */
+.orb::after {
+  content: "";
+  position: absolute;
+  inset: -16%;
+  border-radius: 50%;
+  pointer-events: none;
+  -webkit-mask: radial-gradient(closest-side, transparent 50%, #000 54% 76%, transparent 80%);
+  mask: radial-gradient(closest-side, transparent 50%, #000 54% 76%, transparent 80%);
+}
+
+/* — Quas: crystalline frost spikes growing off the rim, turning slowly — */
+.orb-c::after {
+  background:
+    repeating-conic-gradient(from 4deg, rgba(228, 251, 255, 0.95) 0deg 2.4deg, transparent 2.4deg 15deg),
+    repeating-conic-gradient(from 11deg, rgba(168, 232, 246, 0.65) 0deg 1.3deg, transparent 1.3deg 23deg),
+    radial-gradient(circle, rgba(190, 240, 250, 0.34) 30%, rgba(140, 220, 240, 0.13) 58%, transparent 74%);
+  filter: blur(0.5px) drop-shadow(0 0 9px rgba(168, 236, 248, 0.7));
+  animation: frostSpin 30s linear infinite;
+}
+@keyframes frostSpin {
+  0%   { transform: rotate(0deg)   scale(0.94); opacity: 0.55; }
+  50%  { transform: rotate(180deg) scale(1.1);  opacity: 0.95; }
+  100% { transform: rotate(360deg) scale(0.94); opacity: 0.55; }
+}
+
+/* — Wex: live electric arcs that hop around the rim in snapped steps — */
+.orb-s::after {
+  inset: -13%;
+  background:
+    repeating-conic-gradient(from 20deg, rgba(242, 230, 255, 0.95) 0deg 1.2deg, transparent 1.2deg 37deg),
+    repeating-conic-gradient(from 152deg, rgba(206, 172, 255, 0.8) 0deg 0.8deg, transparent 0.8deg 53deg),
+    radial-gradient(circle, rgba(196, 158, 255, 0.3) 30%, rgba(150, 100, 230, 0.11) 56%, transparent 72%);
+  filter: drop-shadow(0 0 7px rgba(180, 130, 255, 0.85));
+  animation: arcJump 2.1s steps(14) infinite;
+}
+@keyframes arcJump {
+  to { transform: rotate(360deg); }
+}
+
+/* — Exort: a full corona of flame tongues crowning the sphere — */
+.orb-g::after {
+  inset: -26% -18% -12%;
+  background:
+    repeating-conic-gradient(from 0deg, rgba(255, 196, 96, 0.9) 0deg 3.2deg, transparent 3.2deg 17deg),
+    repeating-conic-gradient(from 9deg, rgba(255, 122, 40, 0.7) 0deg 2deg, transparent 2deg 26deg),
+    radial-gradient(circle at 50% 62%, rgba(255, 206, 110, 0.5) 24%, rgba(255, 138, 60, 0.3) 50%, rgba(255, 90, 26, 0.13) 64%, transparent 76%);
+  -webkit-mask: radial-gradient(closest-side at 50% 58%, transparent 40%, #000 47% 74%, transparent 80%);
+  mask: radial-gradient(closest-side at 50% 58%, transparent 40%, #000 47% 74%, transparent 80%);
+  filter: blur(2.2px) drop-shadow(0 0 12px rgba(255, 138, 60, 0.7));
+  transform-origin: 50% 62%;
+  animation: coronaFlame 2.5s ease-in-out infinite;
+}
+@keyframes coronaFlame {
+  0%, 100% { transform: scale(0.93) rotate(-1.5deg); opacity: 0.62; }
+  30%      { transform: scale(1.13) rotate(1.5deg);  opacity: 1; }
+  55%      { transform: scale(1.0)  rotate(-0.5deg); opacity: 0.78; }
+  80%      { transform: scale(1.17) rotate(2deg);    opacity: 0.95; }
+}
+
+/* — Quas: ice — */
+.orb-c {
+  --orb-mid: #55c9e0;
+  --orb-deep: #14789c;
+  --orb-rim: rgba(214, 250, 255, 0.85);
+  --orb-core: #cdf4ff;
+  --orb-line: rgba(110, 214, 236, 0.5);
+  --orb-glow: rgba(72, 200, 228, 0.55);
+  --orb-glow-soft: rgba(72, 200, 228, 0.26);
+}
+/* — Wex: storm — */
+.orb-s {
+  --orb-mid: #a06fe4;
+  --orb-deep: #57309f;
+  --orb-rim: rgba(236, 216, 255, 0.85);
+  --orb-core: #e6ccff;
+  --orb-line: rgba(168, 122, 236, 0.5);
+  --orb-glow: rgba(150, 100, 230, 0.55);
+  --orb-glow-soft: rgba(150, 100, 230, 0.26);
+  animation-delay: -2.2s;
+}
+/* — Exort: fire — */
+.orb-g {
+  --orb-mid: #f58038;
+  --orb-deep: #b53510;
+  --orb-rim: rgba(255, 226, 182, 0.85);
+  --orb-core: #ffdca6;
+  --orb-line: rgba(250, 150, 80, 0.5);
+  --orb-glow: rgba(245, 120, 50, 0.55);
+  --orb-glow-soft: rgba(245, 120, 50, 0.26);
+  animation-delay: -4.1s;
+}
+
+@keyframes orbFloat {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -9px; }
+}
+
+/* the PooriTel glyph carried inside each orb — bright, edged with a
+   dark shadow so it stays legible over the glowing elemental core */
+.orb-glyph {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 48%;
+  height: 48%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  color: #ffffff;
+  opacity: 1;
+  filter:
+    drop-shadow(0 1px 1.5px rgba(2, 6, 14, 0.6))
+    drop-shadow(0 0 9px var(--orb-glow));
+  pointer-events: none;
+}
+:root:not([data-theme="dark"]) .orb-glyph {
+  filter:
+    drop-shadow(0 1px 2px rgba(20, 30, 40, 0.55))
+    drop-shadow(0 0 7px var(--orb-glow));
+}
+
+/* ------------------------------------------------------------
+   Orb flight control — the gateway engine positions the orbs;
+   these states drive scale / glow / merge / respawn.
+   ------------------------------------------------------------ */
+.invoker-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: 22;
+  pointer-events: none;
+}
+.invoker-orbs .orb {
+  position: absolute;
+  left: -100px;
+  top: -100px;
+}
+
+/* in light mode the spheres keep their punch against the pale sky */
+:root:not([data-theme="dark"]) .orb {
+  filter: saturate(1.12) drop-shadow(0 6px 18px var(--orb-glow-soft));
+}
+:root:not([data-theme="dark"]) .orb::after {
+  opacity: 0.7;
+}
+
+/* he gathers power — the orbs surge at his hands */
+.invoker-orbs.surge .orb {
+  transition:
+    transform 0.34s var(--ease-out),
+    opacity 0.5s var(--ease-out),
+    filter 0.34s var(--ease-out),
+    box-shadow 0.34s var(--ease-out);
+  transform: scale(1.3);
+  filter: brightness(1.3) saturate(1.28) drop-shadow(0 8px 26px var(--orb-glow));
+  box-shadow:
+    0 0 26px var(--orb-glow),
+    0 0 70px var(--orb-glow),
+    0 0 140px var(--orb-glow-soft),
+    0 0 0 1px var(--orb-line),
+    inset 0 -9px 18px rgba(3, 6, 14, 0.55),
+    inset 0 6px 12px rgba(255, 255, 255, 0.4);
+}
+
+/* in flight toward the core — the engine steers, CSS bobbing pauses */
+.invoker-orbs.flying .orb {
+  animation-name: satSpinHost;
+}
+@keyframes satSpinHost {
+  from, to { translate: 0 0; }
+}
+
+/* swallowed by the gateway */
+.invoker-orbs.merge .orb {
+  transform: scale(0.04);
+  opacity: 0;
+  transition:
+    transform 0.42s var(--ease-io),
+    opacity 0.36s var(--ease-io);
+}
+
+/* re-formed at his hands once the gate is open — calm watch */
+.invoker-orbs.settled .orb {
+  opacity: 0.42;
+}
+.orb.pop {
+  animation:
+    orbPop 0.65s var(--ease-out) both,
+    orbFloat 9s ease-in-out 0.65s infinite;
+}
+@keyframes orbPop {
+  0%   { transform: scale(0); opacity: 0; }
+  65%  { transform: scale(1.18); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 620px) {
+  .orb {
+    width: clamp(24px, 6.6vw, 33px);
+    height: clamp(24px, 6.6vw, 33px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orb,
+  .orb::before,
+  .orb::after,
+  .bg-scene,
+  .ground-fog {
+    animation: none;
+  }
+}
+
+.bg-glow {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(2px);
+}
+.bg-glow.g-a {
+  width: 62vmax;
+  height: 62vmax;
+  left: -18vmax;
+  top: -22vmax;
+  background: radial-gradient(circle, var(--glow-a), transparent 62%);
+  animation: driftA 46s ease-in-out infinite alternate;
+}
+.bg-glow.g-b {
+  width: 54vmax;
+  height: 54vmax;
+  right: -16vmax;
+  bottom: -20vmax;
+  background: radial-gradient(circle, var(--glow-b), transparent 60%);
+  animation: driftB 54s ease-in-out infinite alternate;
+}
+@keyframes driftA {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(7vmax, 5vmax, 0) scale(1.12); }
+}
+@keyframes driftB {
+  from { transform: translate3d(0, 0, 0) scale(1.05); }
+  to   { transform: translate3d(-6vmax, -4vmax, 0) scale(0.94); }
+}
+
+/* faint arcane grid */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid-a) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-b) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 92% 82% at 50% 44%,
+    #000 20%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    ellipse 92% 82% at 50% 44%,
+    #000 20%,
+    transparent 78%
+  );
+  animation: gridPan 30s linear infinite;
+}
+@keyframes gridPan {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 46px 46px, 46px 46px; }
+}
+
+/* rising magical embers / motes (dark theme only) */
+.bg-embers {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(2.2px 2.2px at 12% 78%, rgba(227, 192, 120, 0.7), transparent 60%),
+    radial-gradient(1.8px 1.8px at 24% 56%, rgba(99, 216, 228, 0.6), transparent 60%),
+    radial-gradient(2.4px 2.4px at 68% 82%, rgba(227, 192, 120, 0.55), transparent 60%),
+    radial-gradient(1.6px 1.6px at 84% 64%, rgba(157, 187, 143, 0.6), transparent 60%),
+    radial-gradient(2px 2px at 44% 88%, rgba(99, 216, 228, 0.5), transparent 60%),
+    radial-gradient(1.7px 1.7px at 92% 38%, rgba(227, 192, 120, 0.5), transparent 60%),
+    radial-gradient(1.5px 1.5px at 6% 34%, rgba(157, 187, 143, 0.5), transparent 60%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 12%, #000 70%);
+  mask-image: linear-gradient(180deg, transparent 12%, #000 70%);
+  animation: emberFloat 17s ease-in-out infinite alternate;
+}
+@keyframes emberFloat {
+  from { transform: translate3d(0, 2.5%, 0); opacity: 0.5; }
+  50%  { opacity: 0.95; }
+  to   { transform: translate3d(0, -2.5%, 0); opacity: 0.55; }
+}
+:root:not([data-theme="dark"]) .bg-embers {
+  display: none;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: var(--grain-blend);
+  background-image: url("image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+/* ------------------------------------------------------------
+   App shell / header / footer
+   ------------------------------------------------------------ */
+.app-shell {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.main-zone {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-header {
+  position: relative;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px clamp(16px, 4vw, 42px);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.brand-mark {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  transform: rotate(45deg);
+  border-radius: 11px;
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)) padding-box,
+    linear-gradient(135deg, var(--gold), var(--cyan)) border-box;
+  box-shadow: 0 10px 24px rgba(31, 53, 35, 0.1), var(--brand-glow);
+  transition: box-shadow 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+.brand:hover .brand-mark {
+  transform: rotate(45deg) scale(1.06);
+}
+:root[data-theme="dark"] .brand-mark {
+  background:
+    linear-gradient(150deg, #131c30, #0c1322) padding-box,
+    linear-gradient(135deg, var(--gold), var(--cyan)) border-box;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4), var(--brand-glow);
+}
+:root[data-theme="dark"] .brand:hover .brand-mark {
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    0 0 34px rgba(0, 200, 216, 0.3);
+}
+.brand-mark > span {
+  transform: rotate(-45deg);
+  display: grid;
+  place-items: center;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+.brand-name {
+  font-family: "Cinzel", "Vazirmatn", "Inter", serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+html[lang="fa"] .brand-name {
+  font-family: "Vazirmatn", "Inter", sans-serif;
+  font-weight: 900;
+}
+:root[data-theme="dark"] .brand-name {
+  text-shadow: 0 0 18px rgba(213, 174, 99, 0.25);
+}
+.brand-tag {
+  font-size: 10.8px;
+  font-weight: 500;
+  color: var(--muted);
+}
+html[lang="en"] .brand-tag {
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 9.4px;
+  color: var(--tag-en);
+}
+
+.site-foot {
+  position: relative;
+  z-index: 45;
+  text-align: center;
+  padding: 14px 16px 20px;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+/* ------------------------------------------------------------
+   Language dropdown (.lang-dropdown — reused site-wide pattern)
+   ------------------------------------------------------------ */
+.lang-dropdown {
+  position: relative;
+  z-index: 60;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 39px;
+  padding: 0 13px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s var(--ease-out);
+}
+.lang-btn:hover {
+  border-color: var(--cyan-line);
+  box-shadow: 0 8px 22px rgba(31, 53, 35, 0.09);
+  transform: translateY(-1px);
+}
+:root[data-theme="dark"] .lang-btn:hover {
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 0 18px rgba(0, 200, 216, 0.12);
+}
+.lang-btn svg.chev {
+  transition: transform 0.3s var(--ease-out);
+  color: var(--muted);
+}
+.lang-dropdown.open .lang-btn svg.chev {
+  transform: rotate(180deg);
+}
+.lang-btn .globe {
+  color: var(--cyan-ink);
+}
+
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  inset-inline-end: 0;
+  min-width: 138px;
+  padding: 5px;
+  display: grid;
+  gap: 2px;
+  background: var(--panel-strong);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--panel-shadow);
+  animation: menuIn 0.28s var(--ease-out) both;
+}
+@keyframes menuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.lang-opt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.lang-opt:hover {
+  background: var(--surface-soft);
+}
+.lang-opt[aria-checked="true"] {
+  color: var(--cyan-ink);
+  font-weight: 800;
+}
+.lang-opt .tick {
+  opacity: 0;
+}
+.lang-opt[aria-checked="true"] .tick {
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------
+   Theme toggle (sun / moon)
+   ------------------------------------------------------------ */
+.theme-btn {
+  position: relative;
+  width: 39px;
+  height: 39px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--gold-ink);
+  cursor: pointer;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s var(--ease-out);
+}
+.theme-btn:hover {
+  border-color: rgba(213, 174, 99, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(31, 53, 35, 0.1);
+}
+:root[data-theme="dark"] .theme-btn:hover {
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 0 18px rgba(213, 174, 99, 0.16);
+}
+.theme-btn svg {
+  grid-area: 1 / 1;
+  transition: opacity 0.4s var(--ease-out), transform 0.5s var(--ease-io);
+}
+.theme-btn .icon-moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+.theme-btn .icon-sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.4);
+}
+:root[data-theme="dark"] .theme-btn .icon-moon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.4);
+}
+:root[data-theme="dark"] .theme-btn .icon-sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}

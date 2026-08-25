@@ -349,24 +349,24 @@ async function logout(request, env) {
 }
 
 async function cryptoTest() {
-  const testIterations = 5000;
+  const testIterations = 100000;
   const salt = randomBytes(16);
-  const start = Date.now();
+  const start = performance.now();
   try {
     await derivePasswordHash("pooritel-debug-password", salt, testIterations);
-    const elapsedMs = Date.now() - start;
+    const elapsedMs = performance.now() - start;
     return json({
       success: true,
       test_iterations: testIterations,
-      elapsed_ms: elapsedMs,
+      elapsed_ms: Math.round(elapsedMs * 100) / 100,
       production_iterations: PBKDF2_ITERATIONS,
-      conclusion: "baseline_ok",
+      conclusion: elapsedMs > 10 ? "likely_cpu_limit" : "baseline_ok",
     });
   } catch (error) {
     return json({
       success: false,
       test_iterations: testIterations,
-      elapsed_ms: Date.now() - start,
+      elapsed_ms: Math.round((performance.now() - start) * 100) / 100,
       error_type: error instanceof Error ? error.name : "unknown",
       error_message: error instanceof Error ? error.message : String(error),
     }, 500);

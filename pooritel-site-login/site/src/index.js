@@ -37,7 +37,7 @@ function randomBytes(length) {
   return bytes;
 }
 
-async function derivePasswordHash(password, salt) {
+async function derivePasswordHash(password, salt, iterations = PBKDF2_ITERATIONS) {
   const key = await crypto.subtle.importKey(
     "raw",
     new TextEncoder().encode(password),
@@ -50,7 +50,7 @@ async function derivePasswordHash(password, salt) {
     {
       name: "PBKDF2",
       salt,
-      iterations: PBKDF2_ITERATIONS,
+      iterations,
       hash: "SHA-256",
     },
     key,
@@ -89,10 +89,6 @@ async function verifyPassword(password, storedHash) {
   let diff = 0;
   for (let i = 0; i < expected.length; i += 1) diff |= derived[i] ^ expected[i];
   return diff === 0;
-}
-
-async function createPasswordHash(password) {
-  return hashPassword(password);
 }
 
 async function createTokenHash(token) {
@@ -151,10 +147,10 @@ async function createSession(client, userId) {
            WHERE user_id = $1
              AND revoked_at IS NULL
              AND expires_at > NOW()
-           ORDER BY created_at ASC
-           OFFSET $2
+           ORDER BY created_at DESC
+           OFFSET 1
          )`,
-      [userId, MAX_ACTIVE_SESSIONS - 1]
+      [userId]
     );
 
     await client.query(
@@ -205,14 +201,14 @@ async function registerEmail(request, env) {
       return json({ success: false, error: "An account with this email already exists." }, 409);
     }
 
-    const passwordHash = await createPasswordHash(password);
+    const passwordHash = await hashPassword(password);
 
     await client.query("BEGIN");
     try {
       const userResult = await client.query(
         `INSERT INTO users (status)
          VALUES ('active')
-         RETURNING id, created_at`,
+         RETURNING id, created_at`
       );
       const user = userResult.rows[0];
 

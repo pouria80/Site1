@@ -348,9 +348,25 @@ async function logout(request, env) {
   }
 }
 
+async function cryptoTest() {
+  const salt = randomBytes(16);
+  const start = Date.now();
+  await derivePasswordHash("pooritel-debug-password", salt, PBKDF2_ITERATIONS);
+  const elapsedMs = Date.now() - start;
+  return json({
+    success: true,
+    iterations: PBKDF2_ITERATIONS,
+    elapsed_ms: elapsedMs,
+  });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    if (request.method === "GET" && url.pathname === "/api/auth/crypto-test") {
+      return cryptoTest();
+    }
 
     if (request.method === "POST" && url.pathname === "/api/auth/register") {
       return registerEmail(request, env);

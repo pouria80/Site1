@@ -91,7 +91,7 @@ async function authRequest(path: string, payload: Record<string, unknown>) {
     body: JSON.stringify(payload),
   });
 
-  let data: { success?: boolean; error?: string } = {};
+  let data: { success?: boolean; error?: string; debug?: boolean; step?: string } = {};
   try {
     data = await response.json();
   } catch {
@@ -99,6 +99,9 @@ async function authRequest(path: string, payload: Record<string, unknown>) {
   }
 
   if (!response.ok || !data.success) {
+    if (data.debug && data.step) {
+      throw new Error(`DEBUG [${data.step}]: ${data.error || "Unknown backend error."}`);
+    }
     throw new Error(data.error || "Authentication request failed.");
   }
 
@@ -111,13 +114,15 @@ export default function App() {
       throw new Error("Phone OTP is not enabled yet. Use Email + Password for now.");
     }
 
-    await authRequest(
-      payload.mode === "register" ? "/api/auth/register" : "/api/auth/login",
-      {
-        email: payload.email,
-        password: payload.password,
-      }
-    );
+    const path =
+      payload.mode === "register"
+        ? "/api/auth/register?debug=1"
+        : "/api/auth/login";
+
+    await authRequest(path, {
+      email: payload.email,
+      password: payload.password,
+    });
 
     window.setTimeout(() => window.location.assign("/"), 900);
   };

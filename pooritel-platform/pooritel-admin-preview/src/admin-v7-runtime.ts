@@ -16,6 +16,11 @@ const radarText = (fa:boolean) => fa ? {
   ]
 };
 
+function currentFa():boolean {
+  const active=document.querySelector('.language button.active') as HTMLElement|null;
+  return (active?.textContent||'').trim() === 'فا';
+}
+
 function addExceptionRadar(){
   const existing=document.querySelector('.v7-exception');
   if(existing) existing.remove();
@@ -25,7 +30,8 @@ function addExceptionRadar(){
   if(flowPanel) flowPanel.remove();
   const anchor=document.querySelector('.content .stack');
   if(!anchor) return;
-  const fa=document.documentElement.lang==='fa';
+  const fa=currentFa();
+  document.documentElement.lang=fa?'fa':'en';
   const t=radarText(fa);
   const section=document.createElement('section');
   section.className='v7-exception';
@@ -42,11 +48,20 @@ function mountPersistentToggle(){
   if(legacy) legacy.classList.add('v7-single-toggle');
 }
 
+function watchLanguage(){
+  const lang=document.querySelector('.language');
+  if(!lang) return;
+  const refresh=()=>window.setTimeout(addExceptionRadar,20);
+  lang.addEventListener('click',refresh);
+  new MutationObserver(refresh).observe(lang,{subtree:true,attributes:true,attributeFilter:['class']});
+}
+
 function run(){
   mountPersistentToggle();
   addExceptionRadar();
   window.setTimeout(addExceptionRadar,150);
   window.setTimeout(addExceptionRadar,500);
+  window.setTimeout(watchLanguage,80);
 }
 
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run); else run();

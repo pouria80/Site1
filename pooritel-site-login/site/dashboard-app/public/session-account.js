@@ -10,7 +10,7 @@
     const isFa=document.documentElement.lang==='fa';
     let account=document.querySelector('.sidebar .sessionAccountSide');
     if(!account){ account=document.createElement('div'); account.className='sessionAccountSide'; sideBottom.appendChild(account); }
-    account.innerHTML=`<button class="sessionAccountTrigger" type="button" aria-expanded="false"><span class="sessionAvatar">${name.slice(0,1).toUpperCase()}</span><span class="sessionMeta"><b>${name}</b><small>${user.email||''}</small></span><span class="sessionChevron">⌄</span></button><div class="sessionSideMenu"><a href="/dashboard/">${isFa?'داشبورد':'Dashboard'}</a><a href="/">${isFa?'فروشگاه':'Store'}</a><button type="button" data-session-logout>${isFa?'خروج از حساب':'Sign out'}</button></div>`;
+    account.innerHTML=`<button class="sessionAccountTrigger" type="button" aria-expanded="false"><span class="sessionAvatar">${name.slice(0,1).toUpperCase()}</span><span class="sessionMeta"><b>${name}</b><small>${user.email||''}</small></span><span class="sessionChevron">⌄</span></button><div class="sessionSideMenu"><button type="button" data-session-logout>${isFa?'خروج از حساب':'Sign out'}</button></div>`;
     const trigger=account.querySelector('.sessionAccountTrigger');
     trigger.addEventListener('click',()=>{const open=account.classList.toggle('open');trigger.setAttribute('aria-expanded',String(open));});
     account.querySelector('[data-session-logout]').addEventListener('click',logout);

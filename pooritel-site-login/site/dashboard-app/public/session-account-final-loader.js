@@ -1,0 +1,1 @@
+(()=>{const load=()=>{const s=document.createElement('script');s.src='/dashboard/session-account.js';document.body.appendChild(s);const l=document.createElement('link');l.rel='stylesheet';l.href='/dashboard/session-account.css';document.head.appendChild(l)};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load);else load()})();

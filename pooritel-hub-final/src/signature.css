@@ -1,0 +1,192 @@
+/* PooriTel Hub — final visual signature + stable bilingual layout */
+
+/* Keep the physical dashboard geometry invariant across languages. */
+.app[data-lang="fa"],
+.app[data-lang="en"] {
+  direction: ltr !important;
+}
+
+/* Restore language direction only where text is read. */
+.app[data-lang="fa"] .brand,
+.app[data-lang="fa"] .nav,
+.app[data-lang="fa"] .group,
+.app[data-lang="fa"] .themeRow,
+.app[data-lang="fa"] .user,
+.app[data-lang="fa"] .topTitle,
+.app[data-lang="fa"] .heroText,
+.app[data-lang="fa"] .orderChip,
+.app[data-lang="fa"] .heroBtns,
+.app[data-lang="fa"] .walletCard,
+.app[data-lang="fa"] .quickBlock,
+.app[data-lang="fa"] .worldCard,
+.app[data-lang="fa"] .journeyCard,
+.app[data-lang="fa"] .supportCard,
+.app[data-lang="fa"] .notifications,
+.app[data-lang="fa"] .productCard,
+.app[data-lang="fa"] .supportActions,
+.app[data-lang="fa"] .sectionHead {
+  direction: rtl;
+  text-align: right;
+}
+
+.app[data-lang="fa"] .search input {
+  direction: rtl;
+  text-align: right;
+}
+
+.app[data-lang="fa"] .heroVisual,
+.app[data-lang="en"] .heroVisual,
+.app[data-lang="fa"] .moneyGrid,
+.app[data-lang="en"] .moneyGrid,
+.app[data-lang="fa"] .quickGrid,
+.app[data-lang="en"] .quickGrid,
+.app[data-lang="fa"] .worldGrid,
+.app[data-lang="en"] .worldGrid,
+.app[data-lang="fa"] .journeyGrid,
+.app[data-lang="en"] .journeyGrid {
+  direction: ltr;
+}
+
+/* Fixed text slots: English/Persian text can change length without reflowing the layout. */
+.hero h1 { min-height: 2.16em; }
+.hero p { min-height: 3.3em; max-width: 56ch; }
+.nav label { min-width: 116px; }
+.walletLabel { min-height: 1.5em; }
+.sectionHead { min-height: 2.2em; }
+.quickCard h3 { min-height: 2.9em; }
+.quickCard p { min-height: 2.9em; }
+.wcard h3 { min-height: 2.3em; }
+.wcard .wtext { min-height: 3.1em; }
+.productCard .pname { min-height: 3.0em; }
+.productCard .psub { min-height: 1.5em; }
+.supportCard h2 { min-height: 2.5em; }
+.supportCard p { min-height: 2.8em; }
+
+/* Prevent language switches from animating every box into a new geometry. */
+.app *,
+.app *::before,
+.app *::after {
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform, fill, stroke;
+}
+
+/* Final visual signature: restrained brass + ember + jade, with a soft ultraviolet trace. */
+.app {
+  --signature-brass: #f3c76a;
+  --signature-ember: #ef7751;
+  --signature-jade: #55d6b1;
+  --signature-violet: #9b8cff;
+  --signature-ink: #07090e;
+  --signature-paper: #f5f1e8;
+}
+
+.app[data-theme="dark"] {
+  --bg: #07090e;
+  --panel: #0f131b;
+  --panel2: #151a23;
+  --line: rgba(255,255,255,.075);
+  --muted: #8e97a6;
+  --text: #f3f0e8;
+  --accent: var(--signature-brass);
+  --accent2: var(--signature-ember);
+  --teal: var(--signature-jade);
+  --violet: var(--signature-violet);
+}
+
+.app[data-theme="light"] {
+  --bg: var(--signature-paper);
+  --panel: #fffdf8;
+  --panel2: #f3eee3;
+  --line: rgba(34,35,38,.10);
+  --muted: #70747b;
+  --text: #17191d;
+  --accent: #b07a18;
+  --accent2: #c75b32;
+  --teal: #138e70;
+  --violet: #6c5ec8;
+}
+
+.atmo {
+  background:
+    radial-gradient(760px 440px at 82% -8%, color-mix(in srgb, var(--accent2) 22%, transparent), transparent 68%),
+    radial-gradient(650px 430px at 12% 102%, color-mix(in srgb, var(--teal) 13%, transparent), transparent 67%),
+    radial-gradient(420px 240px at 66% 34%, color-mix(in srgb, var(--violet) 7%, transparent), transparent 72%);
+}
+
+.hero {
+  background:
+    radial-gradient(560px 340px at 83% 12%, color-mix(in srgb, var(--accent2) 17%, transparent), transparent 66%),
+    radial-gradient(480px 280px at 4% 100%, color-mix(in srgb, var(--teal) 9%, transparent), transparent 66%),
+    linear-gradient(135deg, color-mix(in srgb, var(--panel) 88%, var(--signature-ink)), var(--panel));
+  border-color: color-mix(in srgb, var(--accent) 18%, var(--line));
+  box-shadow: 0 28px 90px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 18px;
+  border: 1px solid color-mix(in srgb, var(--accent) 9%, transparent);
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+.primary {
+  background: linear-gradient(135deg, var(--signature-brass), var(--signature-ember));
+  box-shadow: 0 12px 34px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.quickCard:hover,
+.walletCard:hover,
+.worldCard:hover,
+.journeyCard:hover,
+.supportCard:hover,
+.productCard:hover {
+  border-color: color-mix(in srgb, var(--accent) 46%, var(--line));
+}
+
+.quickCard:hover {
+  box-shadow:
+    0 20px 48px rgba(0,0,0,.22),
+    0 0 0 1px color-mix(in srgb, var(--accent) 13%, transparent),
+    0 0 34px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.productCard:hover .productImage {
+  box-shadow: inset 0 -60px 80px color-mix(in srgb, var(--accent2) 12%, transparent);
+}
+
+/* Keep the physical rail on the right in both locales. */
+.sidebar { right: 0; left: auto; }
+.main { margin-right: 264px; margin-left: 0; }
+.sidebar.closed ~ .main { margin-right: 82px; margin-left: 0; }
+
+/* Stable RTL reading inside the fixed right rail. */
+.app[data-lang="fa"] .sidebar { text-align: right; }
+.app[data-lang="fa"] .nav { flex-direction: row; }
+.app[data-lang="fa"] .nav span { flex: 0 0 20px; }
+
+/* The language switch is a fixed-size control; only its label changes. */
+.langBtn { width: 58px; justify-content: center; flex: 0 0 58px; }
+.langBtn svg { flex: 0 0 auto; }
+
+/* Avoid horizontal jitter from variable translations. */
+.topTitle { min-width: 146px; }
+.search { min-width: 280px; }
+.sectionHead h2,
+.supportCard h2,
+.hero h1,
+.walletCard h3,
+.quickCard h3 { overflow-wrap: anywhere; }
+
+@media (max-width: 1024px) {
+  .main, .sidebar.closed ~ .main { margin-right: 0; margin-left: 0; }
+  .sidebar.mobile { transform: translateX(0); }
+  .mobileMenu { display: block; }
+}
+
+@media (max-width: 720px) {
+  .search { min-width: 0; }
+  .topTitle { min-width: auto; }
+  .hero h1 { min-height: 0; }
+  .hero p { min-height: 0; }
+}

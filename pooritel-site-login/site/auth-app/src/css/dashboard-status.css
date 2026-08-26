@@ -1,0 +1,99 @@
+.account-status {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.status-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(22, 32, 28, 0.02);
+  transition: all 0.2s;
+}
+
+.status-item.verified {
+  background: rgba(16, 185, 129, 0.08);
+  border-left: 3px solid #10b981;
+}
+
+.status-item.pending {
+  background: rgba(245, 158, 11, 0.08);
+  border-left: 3px solid #f59e0b;
+}
+
+.status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  flex-shrink: 0;
+}
+
+.status-item.verified .status-icon {
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.status-item.pending .status-icon {
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.status-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink, #16201c);
+}
+
+.status-item.verified .status-label {
+  color: #10b981;
+}
+
+.status-item.pending .status-label {
+  color: #f59e0b;
+}
+
+.status-action {
+  padding-top: 12px;
+  border-top: 1px solid rgba(22, 32, 28, 0.1);
+}
+
+.btn-outline {
+  width: 100%;
+  padding: 12px;
+  background: white;
+  border: 1px solid rgba(22, 32, 28, 0.2);
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn-outline:hover {
+  border-color: var(--ink, #16201c);
+  background: rgba(22, 32, 28, 0.05);
+}
+
+@media (max-width: 768px) {
+  .status-checks {
+    gap: 8px;
+  }
+
+  .status-item {
+    padding: 10px;
+  }
+}

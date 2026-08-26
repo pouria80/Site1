@@ -1,0 +1,197 @@
+/* PooriTel Hub — mobile-only responsive layer. Desktop is intentionally untouched. */
+@media (max-width: 1024px) {
+  html, body, #root { width: 100%; min-width: 0; overflow-x: hidden; }
+  .app { width: 100%; min-width: 0; overflow-x: clip; }
+
+  .sidebar {
+    right: 0 !important;
+    left: auto !important;
+    width: min(86vw, 320px) !important;
+    max-width: 320px !important;
+    transform: translate3d(110%,0,0) !important;
+    transition: transform .32s cubic-bezier(.2,.8,.2,1), box-shadow .32s ease !important;
+    box-shadow: -22px 0 55px rgba(0,0,0,.28) !important;
+    will-change: transform;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1001 !important;
+  }
+
+  .sidebar.mobile {
+    transform: translate3d(0,0,0) !important;
+  }
+
+  .sidebar .collapse {
+    display: grid;
+    left: 12px !important;
+    right: auto !important;
+    top: 14px !important;
+    z-index: 5;
+  }
+
+  .sidebar.closed { width: min(86vw, 320px) !important; }
+  .sidebar.mobile.closed .brand > div:not(.brandmark),
+  .sidebar.mobile.closed .group,
+  .sidebar.mobile.closed .nav label,
+  .sidebar.mobile.closed .seg,
+  .sidebar.mobile.closed .user > div:not(.avatar),
+  .sidebar.mobile.closed .themeRow span { display: initial !important; }
+  .sidebar.mobile.closed .brand { justify-content: flex-start !important; }
+  .sidebar.mobile.closed .nav { justify-content: flex-start !important; }
+
+  .backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 1000 !important;
+    border: 0 !important;
+    background: rgba(4,9,7,.48) !important;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+  }
+
+  .main,
+  .sidebar.closed ~ .main {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .topbar {
+    min-width: 0;
+    padding: 10px 14px !important;
+    gap: 8px !important;
+  }
+
+  .mobileMenu { display: block !important; }
+  .mobileMenu .iconBtn { width: 40px; height: 40px; }
+  .topTitle { min-width: 0 !important; flex: 0 0 auto; }
+  .topTitle span { display: none; }
+  .search { min-width: 0 !important; width: 100%; max-width: none !important; margin: 0 !important; flex: 1 1 auto; }
+  .search input { min-width: 0; width: 100%; padding-right: 38px; }
+  .topbar > .iconBtn,
+  .topbar > .langBtn { flex: 0 0 auto; }
+  .notifications { right: 12px !important; left: 12px !important; width: auto !important; max-width: none !important; }
+
+  .content { padding: 14px 14px 40px !important; gap: 16px !important; }
+  .proto { font-size: 8px; }
+
+  .hero {
+    grid-template-columns: 1fr !important;
+    gap: 22px !important;
+    min-height: 0 !important;
+    padding: 22px !important;
+    border-radius: 22px !important;
+  }
+
+  .heroText { max-width: none !important; width: 100%; }
+  .hero h1 { font-size: clamp(28px, 9vw, 40px) !important; min-height: 0 !important; max-width: none !important; }
+  .hero p { min-height: 0 !important; max-width: none !important; }
+  .heroBtns { width: 100%; }
+  .heroBtns .primary,
+  .heroBtns .ghost { flex: 1 1 0; justify-content: center; min-width: 0; }
+  .orderDetails { grid-template-columns: 1fr !important; }
+
+  .heroVisual {
+    min-height: 260px;
+    width: 100%;
+    flex-direction: column !important;
+    gap: 24px !important;
+    align-items: center !important;
+  }
+
+  .core { width: 150px !important; height: 150px !important; }
+  .core strong { font-size: 32px !important; }
+  .core span { bottom: 34px !important; }
+  .stageList {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0,1fr)) !important;
+    gap: 8px !important;
+    border-left: 0 !important;
+    padding: 0 !important;
+    direction: ltr !important;
+  }
+  .stage {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 7px !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    text-align: center !important;
+  }
+  .stage i {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  .stage b,
+  .stage small {
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    text-align: center !important;
+    direction: ltr !important;
+  }
+  .stage b { font-size: 10px !important; }
+  .stage small { font-size: 8px !important; }
+
+  .moneyGrid { grid-template-columns: 1fr !important; }
+  .walletCard, .quickBlock, .worldCard, .journeyCard, .supportCard { min-width: 0; }
+  .quickGrid { grid-template-columns: 1fr !important; }
+  .quickCard { min-height: 92px; }
+
+  .worldGrid,
+  .journeyGrid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .productGrid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 10px !important; }
+  .productCard { min-width: 0; }
+  .productInfo { gap: 8px !important; }
+  .productInfo strong { font-size: 13px !important; }
+
+  .sectionTitle { min-width: 0; }
+  .sectionTitle span,
+  .sectionTitle small { min-width: 0; }
+
+  .supportBtns { flex-wrap: wrap; }
+  .supportBtns .primary,
+  .supportBtns .ghost { flex: 1 1 160px; justify-content: center; }
+
+  .footer { padding-bottom: 10px; }
+}
+
+@media (max-width: 520px) {
+  .topbar { padding: 9px 10px !important; }
+  .topTitle b { font-size: 13px; }
+  .topbar > .iconBtn { width: 36px; height: 36px; }
+  .langBtn { height: 36px !important; padding: 0 9px !important; }
+  .content { padding: 12px 10px 34px !important; }
+  .hero { padding: 18px !important; }
+  .heroVisual { min-height: 300px; }
+  .stageList { grid-template-columns: repeat(2, minmax(0,1fr)) !important; row-gap: 14px !important; }
+  .stage b { font-size: 9.5px !important; }
+  .stage small { font-size: 7.5px !important; }
+  .productGrid { grid-template-columns: 1fr !important; }
+  .notifications { top: 55px !important; }
+}
+
+@media (max-width: 380px) {
+  .topTitle { display: none; }
+  .search input { font-size: 11px; }
+  .hero h1 { font-size: 27px !important; }
+  .heroBtns { flex-direction: column; }
+  .heroBtns .primary,
+  .heroBtns .ghost { width: 100%; }
+  .walletBtns { flex-direction: column; }
+  .stageList { grid-template-columns: 1fr 1fr !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar { transition: none !important; }
+  .backdrop { backdrop-filter: none; }
+}

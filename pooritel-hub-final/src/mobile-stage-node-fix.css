@@ -27,7 +27,6 @@
     z-index: 2 !important;
   }
 
-  /* Keep the title/meta anchored to the same physical position as the icon. */
   .stage b,
   .stage small {
     position: relative !important;

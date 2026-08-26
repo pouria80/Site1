@@ -1,0 +1,1 @@
+Session-aware dashboard assets are mounted by dashboard-app/index.html.

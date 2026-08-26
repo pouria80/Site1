@@ -1,1 +1,0 @@
-export {YourWorld as default} from './Shared';

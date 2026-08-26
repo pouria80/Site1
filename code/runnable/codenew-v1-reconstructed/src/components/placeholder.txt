@@ -1,1 +1,0 @@
-The compatibility components in this folder intentionally keep the original codenew.txt page import paths intact.

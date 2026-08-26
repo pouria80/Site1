@@ -1,1 +1,0 @@
-import React from 'react';import '../../css/dashboard-actions.css';export default function QuickActions(){return <section className="quick-actions"><button>💳<b>Charge Wallet</b><small>Add funds</small></button><button>💸<b>Withdraw</b><small>Request payout</small></button><button>📦<b>View Orders</b><small>All orders</small></button></section>}

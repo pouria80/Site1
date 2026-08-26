@@ -1,1 +1,0 @@
-CustomerHub.tsx is populated from code/codenew.txt using the original page component source. The surrounding files provide the missing imports required to run the TXT as a standalone Vite project.

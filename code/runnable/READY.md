@@ -1,1 +1,0 @@
-Use codenew-v2-exact for the exact single-file source. Use codenew-v1-reconstructed for the modular source plus compatibility layer.

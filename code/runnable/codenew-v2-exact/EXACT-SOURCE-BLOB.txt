@@ -1,3 +1,0 @@
-Canonical source file: code/codenewv2.txt
-Blob SHA: f442713cd54bbf42dfde6c152a38c1ce2e3b8aad
-This marker exists so the runnable folder remains traceable to the exact source used.

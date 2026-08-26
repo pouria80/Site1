@@ -1,1 +1,20 @@
-(()=>{const me=()=>fetch('/api/auth/me',{credentials:'include',cache:'no-store'}).then(async r=>r.ok?r.json():null).catch(()=>null);const logout=()=>fetch('/api/auth/logout',{method:'POST',credentials:'include'}).finally(()=>location.assign('/auth/'));const mount=user=>{const topbar=document.querySelector('.topbar');const sideUser=document.querySelector('.sidebar .user');if(!user){location.assign('/auth/');return}const name=user.email?.split('@')[0]||'Account';if(sideUser){const meta=sideUser.querySelector('div:not(.avatar)');if(meta)meta.innerHTML=`<b>${name}</b><small>${user.email||''}</small>`}if(!topbar)return;if(!topbar.querySelector('.storeHeaderBtn')){const store=document.createElement('a');store.className='storeHeaderBtn';store.href='/';store.textContent=document.documentElement.lang==='fa'?'فروشگاه':'Store';topbar.appendChild(store)}if(topbar.querySelector('.sessionAccount'))return;const button=document.createElement('button');button.className='sessionAccount';button.type='button';button.innerHTML=`<span class="sessionAvatar">${name.slice(0,1).toUpperCase()}</span><span class="sessionMeta"><b>${name}</b><small>${user.email||''}</small></span><span class="sessionChevron">⌄</span>`;button.addEventListener('click',()=>{let menu=document.querySelector('.sessionMenu');if(!menu){menu=document.createElement('div');menu.className='sessionMenu';menu.innerHTML=`<a href="/dashboard/">Dashboard</a><a href="/">${document.documentElement.lang==='fa'?'فروشگاه':'Store'}</a><button type="button" data-session-logout>${document.documentElement.lang==='fa'?'خروج از حساب':'Sign out'}</button>`;topbar.appendChild(menu);menu.querySelector('[data-session-logout]').addEventListener('click',logout)}menu.classList.toggle('open')});topbar.appendChild(button)};me().then(d=>mount(d?.authenticated?d.user:null))})();
+(()=>{
+  const me=()=>fetch('/api/auth/me',{credentials:'include',cache:'no-store'}).then(async r=>r.ok?r.json():null).catch(()=>null);
+  const logout=()=>fetch('/api/auth/logout',{method:'POST',credentials:'include'}).finally(()=>location.assign('/auth/'));
+  const mount=(user)=>{
+    document.querySelectorAll('.topbar .sessionAccount,.topbar .sessionMenu,.topbar .storeHeaderBtn').forEach(el=>el.remove());
+    const sideBottom=document.querySelector('.sidebar .sidebottom');
+    if(!user){ location.assign('/auth/'); return; }
+    if(!sideBottom)return;
+    const name=user.email?.split('@')[0]||'Account';
+    const isFa=document.documentElement.lang==='fa';
+    let account=document.querySelector('.sidebar .sessionAccountSide');
+    if(!account){ account=document.createElement('div'); account.className='sessionAccountSide'; sideBottom.appendChild(account); }
+    account.innerHTML=`<button class="sessionAccountTrigger" type="button" aria-expanded="false"><span class="sessionAvatar">${name.slice(0,1).toUpperCase()}</span><span class="sessionMeta"><b>${name}</b><small>${user.email||''}</small></span><span class="sessionChevron">⌄</span></button><div class="sessionSideMenu"><a href="/dashboard/">${isFa?'داشبورد':'Dashboard'}</a><a href="/">${isFa?'فروشگاه':'Store'}</a><button type="button" data-session-logout>${isFa?'خروج از حساب':'Sign out'}</button></div>`;
+    const trigger=account.querySelector('.sessionAccountTrigger');
+    trigger.addEventListener('click',()=>{const open=account.classList.toggle('open');trigger.setAttribute('aria-expanded',String(open));});
+    account.querySelector('[data-session-logout]').addEventListener('click',logout);
+    document.addEventListener('click',(event)=>{if(!account.contains(event.target)){account.classList.remove('open');trigger.setAttribute('aria-expanded','false');}});
+  };
+  me().then(d=>mount(d?.authenticated?d.user:null));
+})();

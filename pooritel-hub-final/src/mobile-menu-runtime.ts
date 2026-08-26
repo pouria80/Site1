@@ -12,24 +12,45 @@ function getBackdrop() {
   return document.querySelector<HTMLButtonElement>('.backdrop');
 }
 
+function getMenuButton() {
+  return document.querySelector<HTMLButtonElement>('.mobileMenu .iconBtn');
+}
+
+function setBodyLock(open: boolean) {
+  document.body.classList.toggle('pooritel-menu-open', open);
+  document.documentElement.classList.toggle('pooritel-menu-open', open);
+}
+
 function syncBodyLock() {
   const drawer = getDrawer();
   const open = isMobile() && !!drawer?.classList.contains('mobile');
-  document.body.classList.toggle('pooritel-menu-open', open);
-  document.documentElement.classList.toggle('pooritel-menu-open', open);
+  setBodyLock(open);
+  const button = getMenuButton();
+  if (button) button.setAttribute('aria-expanded', String(open));
 }
 
 function closeDrawer() {
   const backdrop = getBackdrop();
   if (backdrop) {
-    backdrop.click();
-    return;
+    backdrop.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+  } else {
+    setBodyLock(false);
   }
-  document.body.classList.remove('pooritel-menu-open');
-  document.documentElement.classList.remove('pooritel-menu-open');
+  requestAnimationFrame(syncBodyLock);
 }
 
 function install() {
+  // Make the header a single, deterministic mobile navigation control.
+  const style = document.createElement('style');
+  style.textContent = `
+    @media (max-width: 1024px) {
+      .topbar { direction:ltr !important; }
+      .mobileMenu { order:99 !important; margin-left:auto !important; margin-right:0 !important; }
+      .sidebar .collapse, .sidebar.mobile .collapse { display:none !important; visibility:hidden !important; pointer-events:none !important; }
+    }
+  `;
+  document.head.appendChild(style);
+
   document.addEventListener('click', (event) => {
     const target = event.target as HTMLElement | null;
     if (!target || !isMobile()) return;
@@ -37,20 +58,20 @@ function install() {
     const menuButton = target.closest('.mobileMenu .iconBtn');
     if (menuButton) {
       const drawer = getDrawer();
+      // React opens the drawer; when it is already open we atomically close it.
       if (drawer?.classList.contains('mobile')) {
-        // Intercept the React handler when already open and close atomically.
         event.preventDefault();
         event.stopImmediatePropagation();
         closeDrawer();
-        return;
       }
+      return;
     }
 
-    if (target.closest('.sidebar.mobile .collapse')) {
-      // There is intentionally no second mobile close control.
+    // No second close button exists on mobile. Any legacy/old control is inert and hidden.
+    if (target.closest('.sidebar .collapse')) {
       event.preventDefault();
       event.stopImmediatePropagation();
-      closeDrawer();
+      return;
     }
   }, true);
 
@@ -65,10 +86,7 @@ function install() {
   if (root) observer.observe(root, { subtree: true, attributes: true, attributeFilter: ['class'] });
 
   window.addEventListener('resize', () => {
-    if (!isMobile()) {
-      document.body.classList.remove('pooritel-menu-open');
-      document.documentElement.classList.remove('pooritel-menu-open');
-    }
+    if (!isMobile()) setBodyLock(false);
     syncBodyLock();
   });
 

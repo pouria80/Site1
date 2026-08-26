@@ -1,0 +1,1 @@
+.checks{display:flex;flex-direction:column;gap:10px;margin-top:16px}.checks span{padding:12px;border-radius:12px;background:rgba(22,32,28,.03)}.checks .ok{color:#159a63;background:rgba(16,185,129,.08)}.checks .warn{color:#ba7a05;background:rgba(245,158,11,.08)}

@@ -1,0 +1,1 @@
+export {NowSignal as default} from './Shared';

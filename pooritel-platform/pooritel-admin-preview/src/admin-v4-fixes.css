@@ -1,0 +1,23 @@
+/* PooriTel Admin V4 — readability, language, sidebar control fixes */
+.admin-v3{--font-body:Inter,Vazirmatn,sans-serif}
+.admin-v3,.admin-v3 button,.admin-v3 input,.admin-v3 table{font-family:var(--font-body)}
+.admin-v3 .collapse{left:auto!important;right:12px!important;top:16px!important;z-index:80;width:34px;height:34px;border-radius:10px;font-size:16px}
+.admin-v3 .sidebar{padding-top:60px}
+.admin-v3 .nav{min-height:42px;padding:10px 11px;gap:11px}
+.admin-v3 .nav i{width:27px;height:27px;font-size:13px;flex:0 0 27px}
+.admin-v3 .nav span{font-size:13px!important;font-weight:650;line-height:1.35}
+.admin-v3 .group{font-size:9px!important;letter-spacing:.14em;padding-top:16px}
+.admin-v3 .brand strong{font-size:16px}.admin-v3 .brand span{font-size:9px}
+.admin-v3 .profile strong{font-size:12px}.admin-v3 .profile small{font-size:9px}
+.admin-v3 .crumb strong{font-size:14px}.admin-v3 .crumb span{font-size:9px}
+.admin-v3 .search input{font-size:12px}.admin-v3 .tool,.admin-v3 .store,.admin-v3 .language button{font-size:10px}
+.admin-v3 .heading h1{font-size:30px!important}.admin-v3 .heading p{font-size:12px!important;line-height:1.5}.admin-v3 .eyebrow{font-size:9px!important;letter-spacing:.14em}
+.admin-v3 .kpi{padding:16px}.admin-v3 .kpi span{font-size:10px}.admin-v3 .kpi strong{font-size:25px}.admin-v3 .kpi small{font-size:10px}
+.admin-v3 .panel h2{font-size:18px!important}.admin-v3 .muted{font-size:10px}
+.admin-v3 .queue button{padding:11px}.admin-v3 .queue strong{font-size:12px}.admin-v3 .queue small{font-size:10px}.admin-v3 .queue em{font-size:9px}.admin-v3 .qicon{width:36px;height:36px;font-size:14px}
+.admin-v3 .walletbox{padding:14px}.admin-v3 .walletbox span{font-size:10px}.admin-v3 .walletbox strong{font-size:22px}.admin-v3 .walletbox small{font-size:9px}.admin-v3 .ledgerrow span{font-size:10px}.admin-v3 .ledgerrow strong{font-size:10px}
+.admin-v3 .activityrow time{font-size:10px}.admin-v3 .activityrow strong{font-size:11px}.admin-v3 .activityrow small{font-size:9px}
+.admin-v3 th{font-size:9px;padding:13px 15px}.admin-v3 td{font-size:11px;padding:14px 15px}.admin-v3 td small{font-size:9px}.admin-v3 .tag{font-size:9px}
+.admin-v3 .filter{font-size:10px;padding:9px 11px}.admin-v3 .filter b{font-size:10px}.admin-v3 .detailgrid span{font-size:8px}.admin-v3 .detailgrid strong{font-size:11px}.admin-v3 .decision button{font-size:10px;padding:11px}
+.admin-v3[dir="rtl"] .nav,.admin-v3[dir="rtl"] .crumb,.admin-v3[dir="rtl"] .heading,.admin-v3[dir="rtl"] .panel,.admin-v3[dir="rtl"] th,.admin-v3[dir="rtl"] td{direction:rtl;text-align:right}
+@media(max-width:780px){.admin-v3 .collapse{right:10px!important;left:auto!important;top:14px!important}.admin-v3 .sidebar{padding-top:58px}.admin-v3 .nav span{font-size:14px!important}.admin-v3 .nav{min-height:44px}.admin-v3 .heading h1{font-size:24px!important}.admin-v3 th{font-size:10px}.admin-v3 td{font-size:12px}.admin-v3 .panel h2{font-size:17px!important}}

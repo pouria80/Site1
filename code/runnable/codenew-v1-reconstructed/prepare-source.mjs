@@ -1,4 +1,5 @@
 import { writeFile } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
 
@@ -19,9 +20,9 @@ function download(url) {
 
 let source = null;
 try {
-  source = require('node:fs').readFileSync(local, 'utf8');
+  source = readFileSync(local, 'utf8');
 } catch {
-  // Use the hosted source when the project was downloaded without the TXT files.
+  // Use the hosted source when the project was downloaded without the TXT file.
 }
 
 if (!source) {

@@ -1,0 +1,36 @@
+/* Mobile Hero Stage Node Fix — keep only the real circular stage icon. */
+@media (max-width: 767px) {
+  .heroVisual .stage::before,
+  .heroVisual .stage::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .heroVisual .stage {
+    position: relative !important;
+    align-items: start !important;
+    justify-items: start !important;
+  }
+
+  .heroVisual .stage i {
+    position: relative !important;
+    z-index: 3 !important;
+    transform: none !important;
+    margin: 0 !important;
+  }
+
+  .heroVisual .stage i::before {
+    inset: -4px !important;
+  }
+
+  .heroVisual .stage i::after {
+    z-index: 2 !important;
+  }
+
+  /* Keep the title/meta anchored to the same physical position as the icon. */
+  .stage b,
+  .stage small {
+    position: relative !important;
+    z-index: 4 !important;
+  }
+}

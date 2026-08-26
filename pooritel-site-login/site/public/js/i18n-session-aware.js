@@ -1,0 +1,2 @@
+import { getCurrentUser } from './session-ui.js';
+export async function syncAccountControl(){const user=await getCurrentUser();const link=document.querySelector('a.login[href="/auth/"],a.login');if(!link)return user;if(user){const name=user.email?.split('@')[0]||user.email;link.textContent=name;link.href='/dashboard/';link.classList.add('is-authenticated');link.title=user.email||name}else{link.textContent=document.documentElement.lang==='fa'?'ورود':'Login';link.href='/auth/';link.classList.remove('is-authenticated');link.title=''}return user}

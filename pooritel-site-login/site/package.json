@@ -1,0 +1,19 @@
+{
+  "name": "pooritel",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "scripts": {
+    "build:auth": "npm install --prefix auth-app && npm run build --prefix auth-app",
+    "dev": "wrangler dev",
+    "deploy": "npm run build:auth && wrangler deploy",
+    "preview": "wrangler dev",
+    "check": "wrangler deploy --dry-run"
+  },
+  "dependencies": {
+    "pg": "^8.23.0"
+  },
+  "devDependencies": {
+    "wrangler": "latest"
+  }
+}

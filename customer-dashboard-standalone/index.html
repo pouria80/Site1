@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#edf1eb" />
+  <title>PooriTel — Customer Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app" class="customer-dashboard">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar open" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <span class="brand-icon">◈</span>
+          <span class="brand-name">PooriTel</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <span class="nav-title">Workspace</span>
+          <a href="#dashboard" class="nav-link active">📊 Dashboard</a>
+          <a href="#orders" class="nav-link">📦 Orders</a>
+          <a href="#wallets" class="nav-link">💳 Wallets</a>
+        </div>
+
+        <div class="nav-section">
+          <span class="nav-title">Account</span>
+          <a href="#profile" class="nav-link">👤 Profile</a>
+          <a href="#security" class="nav-link">🔒 Security</a>
+          <a href="#verify" class="nav-link">📋 Verification</a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <div class="avatar">P</div>
+          <div class="user-info">
+            <p class="user-name">Pouria</p>
+            <p class="user-email">pouria@example.com</p>
+          </div>
+        </div>
+        <button class="logout-btn" onclick="alert('Logout functionality')">🚪 Logout</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main sidebar-open" id="dashboardMain">
+      <!-- Header -->
+      <div class="dashboard-header">
+        <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">☰</button>
+        <h1>Dashboard</h1>
+        <div class="header-actions">
+          <button class="icon-btn" aria-label="Notifications">🔔</button>
+          <button class="icon-btn" aria-label="Settings">⚙️</button>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="dashboard-content">
+        <!-- Balance Hero -->
+        <section class="balance-hero glass">
+          <div class="balance-header">
+            <h2>Available Balance</h2>
+            <div class="currency-toggle">
+              <button class="currency-btn active" onclick="switchCurrency('USD')">USD</button>
+              <button class="currency-btn" onclick="switchCurrency('IRT')">IRT</button>
+            </div>
+          </div>
+
+          <div class="balance-display">
+            <div class="amount">
+              <span class="currency-symbol" id="currencySymbol">$</span>
+              <span class="value" id="balanceValue">1,250.50</span>
+            </div>
+            <p class="balance-label" id="currencyLabel">United States Dollar</p>
+          </div>
+
+          <div class="balance-actions">
+            <button class="btn-primary" onclick="alert('Charge Wallet functionality')">Charge Wallet</button>
+            <button class="btn-secondary" onclick="alert('Withdraw functionality')">Withdraw</button>
+          </div>
+
+          <div class="balance-meta">
+            <span class="badge">Last updated: Now</span>
+          </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="quick-actions">
+          <div class="action-card charge">
+            <div class="action-icon">💳</div>
+            <h3>Charge Wallet</h3>
+            <p>Add funds to your account</p>
+            <button class="action-btn" onclick="alert('Charge Wallet')">Go →</button>
+          </div>
+
+          <div class="action-card withdraw">
+            <div class="action-icon">💸</div>
+            <h3>Withdraw</h3>
+            <p>Request a withdrawal</p>
+            <button class="action-btn" onclick="alert('Withdraw')">Go →</button>
+          </div>
+
+          <div class="action-card orders">
+            <div class="action-icon">📦</div>
+            <h3>View Orders</h3>
+            <p>Check all your orders</p>
+            <button class="action-btn" onclick="alert('View Orders')">Go →</button>
+          </div>
+        </section>
+
+        <!-- Grid: Recent Orders + Account Status -->
+        <div class="dashboard-grid">
+          <!-- Recent Orders -->
+          <div class="grid-col-left">
+            <section class="recent-orders glass">
+              <div class="section-header">
+                <h3>Recent Orders</h3>
+                <a href="#" class="view-all">View all →</a>
+              </div>
+
+              <div class="orders-list">
+                <div class="order-item">
+                  <div class="order-info">
+                    <p class="order-product">Telegram Premium · 12 months</p>
+                    <p class="order-id">#PT-10492</p>
+                  </div>
+                  <div class="order-meta">
+                    <span class="order-amount">$21.90</span>
+                    <span class="order-status" style="border-color: #f59e0b">PENDING</span>
+                  </div>
+                  <p class="order-date">Aug 25, 2026</p>
+                </div>
+
+                <div class="order-item">
+                  <div class="order-info">
+                    <p class="order-product">Steam Wallet 20 USD</p>
+                    <p class="order-id">#PT-10471</p>
+                  </div>
+                  <div class="order-meta">
+                    <span class="order-amount">$20.45</span>
+                    <span class="order-status" style="border-color: #10b981">DONE</span>
+                  </div>
+                  <p class="order-date">Aug 23, 2026</p>
+                </div>
+
+                <div class="order-item">
+                  <div class="order-info">
+                    <p class="order-product">Dota 2 Item Bundle</p>
+                    <p class="order-id">#PT-10466</p>
+                  </div>
+                  <div class="order-meta">
+                    <span class="order-amount">$15.00</span>
+                    <span class="order-status" style="border-color: #10b981">DONE</span>
+                  </div>
+                  <p class="order-date">Aug 20, 2026</p>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- Account Status -->
+          <div class="grid-col-right">
+            <section class="account-status glass">
+              <div class="section-header">
+                <h3>Account Health</h3>
+              </div>
+
+              <div class="status-checks">
+                <div class="status-item verified">
+                  <span class="status-icon">✓</span>
+                  <span class="status-label">Email Verified</span>
+                </div>
+                <div class="status-item verified">
+                  <span class="status-icon">●</span>
+                  <span class="status-label">Account Active</span>
+                </div>
+                <div class="status-item verified">
+                  <span class="status-icon">🔒</span>
+                  <span class="status-label">Security Status</span>
+                </div>
+                <div class="status-item pending">
+                  <span class="status-icon">📋</span>
+                  <span class="status-label">Identity Verified</span>
+                </div>
+              </div>
+
+              <div class="status-action">
+                <button class="btn-outline" onclick="alert('Complete Identity Verification')">Verify Identity</button>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <!-- Activity Log -->
+        <section class="activity-log glass">
+          <div class="section-header">
+            <h3>Important Activity</h3>
+            <span class="activity-count">5 events</span>
+          </div>
+
+          <div class="activity-list">
+            <div class="activity-item">
+              <span class="activity-icon">🔑</span>
+              <div class="activity-content">
+                <p class="activity-desc">New login from Chrome on Windows</p>
+                <p class="activity-time">Aug 26, 2026 • 2:30 AM</p>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <span class="activity-icon">💳</span>
+              <div class="activity-content">
+                <p class="activity-desc">Wallet charged with $100</p>
+                <p class="activity-time">Aug 25, 2026 • 11:15 PM</p>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <span class="activity-icon">📦</span>
+              <div class="activity-content">
+                <p class="activity-desc">Order placed: Telegram Premium</p>
+                <p class="activity-time">Aug 25, 2026 • 3:45 PM</p>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <span class="activity-icon">✓</span>
+              <div class="activity-content">
+                <p class="activity-desc">Payment successful for order #PT-10471</p>
+                <p class="activity-time">Aug 23, 2026 • 1:20 PM</p>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <span class="activity-icon">💸</span>
+              <div class="activity-content">
+                <p class="activity-desc">Withdrawal request approved</p>
+                <p class="activity-time">Aug 20, 2026 • 9:00 AM</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './style.css';
-import './mobile.css';
 
 type Lang = 'fa' | 'en';
 type Theme = 'dark' | 'light';
+
 type Product = { id: string; title: string; fa: string; price: string; tag: string; tone: string };
 
 const products: Product[] = [
@@ -27,7 +27,7 @@ const en = {
   now:'NOW · CURRENT SIGNAL', moving:'Your order is moving', processing:'Processing', view:'View Order', paid:'Payment', review:'Review', delivery:'Delivery', complete:'Complete',
   walletTitle:'Wallet', balance:'Available balance', add:'Add Funds', withdraw:'Withdraw', quick:'QUICK ACTIONS', myOrders:'My Orders',
   world:'YOUR WORLD', recent:'Recently viewed', saved:'Saved', continue:'Continue', discover:'DISCOVER', picked:'Picked for you',
-  journey:'YOUR JOURNEY', help:'NEED HELP?', helpSub:'Something went wrong. Our crew is here.', ticket:'New Ticket', helpCenter:'Help Center',
+  journey:'YOUR JOURNEY', help:'NEED HELP?', helpSub:'Something went wrong? Our crew is here.', ticket:'New Ticket', helpCenter:'Help Center',
   search:'Search products, orders…', allQuiet:"You're all caught up", quietSub:'No active mission right now. Your next discovery is below.', explore:'Continue exploring', theme:'Theme', language:'Language', current:'NOW', open:'OPEN'
 };
 
@@ -73,7 +73,7 @@ function App(){
   const dir=lang==='fa'?'rtl':'ltr';
   const filtered=useMemo(()=>products.filter(p=>(p.title+' '+p.fa).toLowerCase().includes(query.toLowerCase())),[query]);
 
-  useEffect(()=>{document.documentElement.lang=lang;document.documentElement.dir=dir},[lang,dir]);
+  useEffect(()=>{document.documentElement.lang=lang;document.documentElement.dir='ltr'},[lang]);
   useEffect(()=>{if(!toast)return;const id=setTimeout(()=>setToast(''),2400);return()=>clearTimeout(id)},[toast]);
 
   const section=(id:string)=>{setActive(id);setMobile(false);document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'})};
@@ -90,7 +90,7 @@ function App(){
     {id:'support',label:t.support,icon:'life',target:'support'},
   ];
 
-  return <div className="app" data-theme={theme} data-lang={lang} dir={dir}>
+  return <div className="app" data-theme={theme} data-lang={lang} dir="ltr">
     <div className="atmo"/><div className="grain"/>
     <aside className={'sidebar '+(!open?'closed':'')+(mobile?' mobile':'')}>
       <div className="brand"><div className="brandmark">P</div>{open&&<div><b>PooriTel</b><small>PLAYER HUB</small></div>}</div>
@@ -110,7 +110,7 @@ function App(){
     {mobile&&<button className="backdrop" onClick={()=>setMobile(false)} aria-label="close"/>}
     <main className="main" id="top">
       <header className="topbar">
-        <div className="mobileMenu"><button className="iconBtn" onClick={()=>setMobile(true)}><Icon name="menu"/></button></div>
+        <div className="mobileMenu"><button className="iconBtn" onClick={()=>{setOpen(true);setMobile(true)}}><Icon name="menu"/></button></div>
         <div className="topTitle"><b>PooriTel</b><span>PLAYER HUB</span></div>
         <div className="search"><Icon name="search"/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder={t.search}/></div>
         <button className="iconBtn" onClick={()=>setTheme(v=>v==='dark'?'light':'dark')}><Icon name={theme==='dark'?'sun':'moon'}/></button>
@@ -131,7 +131,7 @@ function App(){
             <div className="heroBtns"><button className="primary" onClick={()=>setOrderOpen(v=>!v)}>{t.view} <Icon name="arrow"/></button><button className="ghost" onClick={()=>setToast(lang==='fa'?'فاکتور نمایش داده شد':'Invoice opened')}>{lang==='fa'?'مشاهده فاکتور':'View invoice'}</button></div>
             {orderOpen&&<div className="orderDetails"><span><b>{t.paid}</b> Wallet · Visa ••4021</span><span><b>{t.review}</b> Security check</span><span><b>{t.delivery}</b> Today · 18:00</span></div>}
           </div>
-          <div className="heroVisual"><div className="orbital o1"><i/></div><div className="orbital o2"><i/></div><div className="core"><div className="coreGlow"/><strong>67%</strong><span>{t.delivery}</span></div><div className="stageList"><div className="stage done"><i><Icon name="check" size={13}/></i><div><b>{t.paid}</b><small>14:01</small></div></div><div className="stage done"><i><Icon name="check" size={13}/></i><div><b>{t.review}</b><small>14:04</small></div></div><div className="stage current"><i/><div><b>{t.delivery}</b><small>{lang==='fa'?'در حال انجام':'In progress'}</small></div></div><div className="stage next"><i/><div><b>{t.complete}</b><small>{lang==='fa'?'در انتظار':'Waiting'}</small></div></div></div></div>
+          <div className="heroVisual"><div className="orbital o1"><i/></div><div className="orbital o2"><i/></div><div className="core"><div className="coreGlow"/><strong>67%</strong><span>{t.delivery}</span></div><div className="stageList"><div className="stage done"><i><Icon name="check" size={13}/></i><div><b>{t.paid}</b><small>14:01</small></div></div><div className="stage done"><i><Icon name="check" size={13}/></i><div><b>{t.review}</b><small>14:04</small></div></div><div className="stage current"><i/><div><b>{t.delivery}</b><small>In progress</small></div></div><div className="stage"><i/><div><b>{t.complete}</b><small>Waiting</small></div></div></div></div>
         </section>
 
         <section className="moneyGrid" id="wallet">
@@ -145,7 +145,7 @@ function App(){
           <div className="worldCard"><div className="cardKicker">{t.continue}</div><div className="continueItem"><div className="progressRing"><svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="17"/><circle className="val" cx="21" cy="21" r="17"/></svg><b>80%</b></div><div><b>{lang==='fa'?'تکمیل پرداخت · اسپاتیفای':'Complete payment · Spotify'}</b><small>{lang==='fa'?'۲ دقیقه مانده':'2 min left'}</small></div><button onClick={()=>setToast(lang==='fa'?'ادامه پرداخت':'Continue payment')}><Icon name="arrow" size={15}/></button></div><button className="tinyAction" onClick={()=>setToast(lang==='fa'?'ادامه عملیات':'Continue action')}>{t.explore} <Icon name="arrow" size={14}/></button></div>
         </div></section>
 
-        <section id="discover"><div className="sectionTitle"><span>{t.discover}</span><small>{t.picked}</small></div><div className="productGrid">{filtered.map((p)=><button key={p.id} className="productCard" onClick={()=>{setSaved(v=>v.includes(p.id)?v.filter(x=>x!==p.id):[...v,p.id]);setToast(lang==='fa'?'محصول به ذخیره‌ها اضافه شد':'Product saved')}}><div className={'productArt '+p.tone}><span>{p.tag}</span><div className="artifact"><i/><b>{p.id==='tg'?'T':p.id==='steam'?'S':p.id==='dota'?'D':'P'}</b></div><div className="artGlow"/></div><div className="productInfo"><div><b>{lang==='fa'?p.fa:p.title}</b><small>{lang==='fa'?'بازار دیجیتال':'Digital marketplace'}</small></div><strong>{p.price}</strong></div><div className="hoverLine"><span>{lang==='fa'?'مشاهده محصول':'View product'}</span><Icon name="arrow" size={15}/></div>{saved.includes(p.id)&&<div className="savedMark"><Icon name="heart" size={14}/></div>}</button>)}</div></section>
+        <section id="discover"><div className="sectionTitle"><span>{t.discover}</span><small>{t.picked}</small></div><div className="productGrid">{filtered.map((p,i)=><button key={p.id} className="productCard" onClick={()=>{setSaved(v=>v.includes(p.id)?v.filter(x=>x!==p.id):[...v,p.id]);setToast(lang==='fa'?'محصول به ذخیره‌ها اضافه شد':'Product saved')}}><div className={'productArt '+p.tone}><span>{p.tag}</span><div className="artifact"><i/><b>{p.id==='tg'?'T':p.id==='steam'?'S':p.id==='dota'?'D':'P'}</b></div><div className="artGlow"/></div><div className="productInfo"><div><b>{lang==='fa'?p.fa:p.title}</b><small>{lang==='fa'?'بازار دیجیتال':'Digital marketplace'}</small></div><strong>{p.price}</strong></div><div className="hoverLine"><span>{lang==='fa'?'مشاهده محصول':'View product'}</span><Icon name="arrow" size={15}/></div>{saved.includes(p.id)&&<div className="savedMark"><Icon name="heart" size={14}/></div>}</button>)}</div></section>
 
         <section className="journeyGrid"><div id="journey" className="journeyCard"><div className="sectionTitle"><span>{t.journey}</span><small>{lang==='fa'?'امروز':'Today'}</small></div><div className="journeyItem"><i className="positive"><Icon name="plus" size={14}/></i><div><b>{lang==='fa'?'شارژ کیف پول':'Wallet charged'}</b><small>+$50.00 · 14:02</small></div></div><div className="journeyItem"><i className="neutral"><Icon name="box" size={14}/></i><div><b>{lang==='fa'?'ثبت سفارش PT-10492':'Order PT-10492 created'}</b><small>-$21.90 · 13:47</small></div></div><div className="journeyItem"><i className="purple"><Icon name="search" size={14}/></i><div><b>{lang==='fa'?'بازدید استیم والت':'Steam Wallet viewed'}</b><small>Discovery · 12:10</small></div></div><div className="journeyItem"><i className="positive"><Icon name="shield" size={14}/></i><div><b>{lang==='fa'?'تمدید امنیت':'Security renewed'}</b><small>Yesterday</small></div></div></div>
           <div id="support" className="supportCard"><div className="eyebrow">{t.help}</div><h2>{t.helpSub}</h2><p>{lang==='fa'?'سؤالت درباره سفارش، پرداخت یا حساب است؟ سریع از اینجا تیکت باز کن.':'Questions about an order, payment or account? Open a ticket here.'}</p><div className="supportBtns"><button className="primary" onClick={()=>setToast(lang==='fa'?'تیکت جدید آماده شد':'New ticket ready')}>{t.ticket}<Icon name="arrow" size={15}/></button><button className="ghost" onClick={()=>setToast(lang==='fa'?'مرکز راهنمایی باز شد':'Help center opened')}>{t.helpCenter}</button></div><div className="supportMeta"><span><i/>2 {lang==='fa'?'تیکت باز':'open tickets'}</span><span>{lang==='fa'?'پاسخ میانگین ۴ دقیقه':'Avg. reply 4 min'}</span></div></div></section>
@@ -156,4 +156,4 @@ function App(){
   </div>
 }
 
-createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.Fragment>);
+createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);

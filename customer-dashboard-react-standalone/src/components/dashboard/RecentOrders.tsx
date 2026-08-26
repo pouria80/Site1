@@ -1,0 +1,4 @@
+import React from 'react';
+import '../../css/dashboard-orders.css';
+interface Order { id:string; product:string; amount:number; status:'pending'|'processing'|'completed'|'cancelled'; date:string }
+export default function RecentOrders({orders}:{orders:Order[]}){return <section className="recent-orders glass"><div className="section-header"><h3>Recent Orders</h3><a href="#" className="view-all">View all →</a></div><div className="orders-list">{orders.length===0?<p className="empty-state">No orders yet</p>:orders.map(o=><div key={o.id} className="order-item"><div className="order-info"><p className="order-product">{o.product}</p><p className="order-id">#{o.id}</p></div><div className="order-meta"><span className="order-amount">${o.amount.toFixed(2)}</span><span className="order-status">{o.status.toUpperCase()}</span></div><p className="order-date">{new Date(o.date).toLocaleDateString()}</p></div>)}</div></section>}

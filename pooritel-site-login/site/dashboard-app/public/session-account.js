@@ -1,0 +1,28 @@
+(() => {
+  const me = () => fetch('/api/auth/me', { credentials: 'include', cache: 'no-store' }).then(async (r) => r.ok ? r.json() : null).catch(() => null);
+  const logout = () => fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }).finally(() => location.assign('/auth/'));
+  const mount = (user) => {
+    const topbar = document.querySelector('.topbar');
+    const sideUser = document.querySelector('.sidebar .user');
+    if (!user) { location.assign('/auth/'); return; }
+    const name = user.email?.split('@')[0] || 'Account';
+    if (sideUser) {
+      const meta = sideUser.querySelector('div:not(.avatar)');
+      if (meta) meta.innerHTML = `<b>${name}</b><small>${user.email || ''}</small>`;
+    }
+    if (!topbar) return;
+    if (!document.querySelector('.sessionAccount')) {
+      const button = document.createElement('button');
+      button.className = 'sessionAccount';
+      button.type = 'button';
+      button.innerHTML = `<span class="sessionAvatar">${name.slice(0,1).toUpperCase()}</span><span class="sessionMeta"><b>${name}</b><small>${user.email || ''}</small></span><span class="sessionChevron">⌄</span>`;
+      button.addEventListener('click', () => {
+        let menu = document.querySelector('.sessionMenu');
+        if (!menu) { menu = document.createElement('div'); menu.className = 'sessionMenu'; menu.innerHTML = `<a href="/dashboard/">Dashboard</a><a href="/">${document.documentElement.lang === 'fa' ? 'فروشگاه' : 'Store'}</a><button type="button" data-session-logout>${document.documentElement.lang === 'fa' ? 'خروج از حساب' : 'Sign out'}</button>`; topbar.appendChild(menu); menu.querySelector('[data-session-logout]').addEventListener('click', logout); }
+        menu.classList.toggle('open');
+      });
+      topbar.appendChild(button);
+    }
+  };
+  me().then((data) => mount(data?.authenticated ? data.user : null));
+})();

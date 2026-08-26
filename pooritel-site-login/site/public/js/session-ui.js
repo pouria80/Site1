@@ -1,24 +1,2 @@
-const SESSION_ENDPOINT = '/api/auth/me';
-
-export async function getCurrentUser() {
-  try {
-    const response = await fetch(SESSION_ENDPOINT, { credentials: 'include', cache: 'no-store' });
-    if (!response.ok) return null;
-    const data = await response.json();
-    return data?.authenticated ? data.user : null;
-  } catch {
-    return null;
-  }
-}
-
-export async function signOut() {
-  await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
-  window.location.assign('/auth/');
-}
-
-autoSessionUI();
-
-async function autoSessionUI() {
-  const user = await getCurrentUser();
-  document.dispatchEvent(new CustomEvent('pooritel:session', { detail: { user } }));
-}
+export async function getCurrentUser(){try{const r=await fetch('/api/auth/me',{credentials:'include',cache:'no-store'});if(!r.ok)return null;const d=await r.json();return d?.authenticated?d.user:null}catch{return null}}
+export async function signOut(){try{await fetch('/api/auth/logout',{method:'POST',credentials:'include'})}finally{window.location.assign('/auth/')}}

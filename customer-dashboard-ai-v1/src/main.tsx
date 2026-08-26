@@ -3,9 +3,10 @@ import { createRoot } from 'react-dom/client';
 import {
   ArrowUpRight, Bell, ChevronLeft, ChevronRight, Clock3, Gamepad2,
   LayoutDashboard, Moon, Plus, Search, Settings, ShieldCheck,
-  ShoppingBag, Sparkles, Sun, UserRound, WalletCards, Zap, Tag
+  ShoppingBag, Sparkles, Sun, Tag, UserRound, WalletCards, Zap
 } from 'lucide-react';
 import './style.css';
+import './theme-overrides.css';
 
 const orders = [
   { id: 'PT-10492', name: 'Telegram Premium · 12 months', amount: '$21.90', status: 'در حال بررسی' },
@@ -111,7 +112,7 @@ function App() {
         <section className="mini-grid">
           <div className="mini-card compact-balance"><div className="mini-icon cyan"><WalletCards /></div><div><span>AVAILABLE</span><b>{usd ? '$124.50' : '۱۲٬۴۵۰٬۰۰۰'}</b></div><small>+ شارژ سریع</small></div>
           <div className="mini-card"><div className="mini-icon purple"><ShoppingBag /></div><div><span>ACTIVE ORDERS</span><b>03</b></div><small>۱ مورد نیازمند بررسی</small></div>
-          <div className="mini-card"><div className="mini-icon amber"><Tag /></div><div><span>MARKET PICK</span><b>−20%</b></div><small>پیشنهاد ویژه امروز</small></div>
+          <div className="mini-card amber"><div className="mini-icon amber"><Tag /></div><div><span>MARKET PICK</span><b>−20%</b></div><small>پیشنهاد ویژه امروز</small></div>
         </section>
 
         <section className="quick">

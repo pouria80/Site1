@@ -119,7 +119,7 @@ export default function App() {
       }
     );
 
-    window.setTimeout(() => window.location.assign("/"), 900);
+    window.setTimeout(() => window.location.assign("/dashboard/"), 250);
   };
 
   const handleSocial: AuthCardProps["onSocial"] = async () => {

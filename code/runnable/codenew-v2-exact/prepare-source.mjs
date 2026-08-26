@@ -1,23 +1,49 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const local = resolve(process.cwd(), '../../codenewv2.txt');
 const target = resolve(process.cwd(), 'src/SourceApp.tsx');
-const remote = 'https://raw.githubusercontent.com/pouria80/Site1/main/code/codenewv2.txt';
+const urls = [
+  'https://cdn.jsdelivr.net/gh/pouria80/Site1@main/code/codenewv2.txt',
+  'https://raw.githubusercontent.com/pouria80/Site1/main/code/codenewv2.txt',
+];
 
-async function load() {
+function download(url) {
+  return execFileSync(
+    'curl.exe',
+    ['-4', '-L', '--fail', '--silent', '--show-error', '--connect-timeout', '20', '--max-time', '60', url],
+    { encoding: 'utf8', maxBuffer: 10 * 1024 * 1024 }
+  );
+}
+
+function loadLocal() {
   try {
-    return await readFile(local, 'utf8');
+    return require('node:fs').readFileSync(local, 'utf8');
   } catch {
-    const res = await fetch(remote, { headers: { 'user-agent': 'pooritel-codenew-v2' } });
-    if (!res.ok) throw new Error(`Could not download original codenewv2.txt (${res.status})`);
-    return await res.text();
+    return null;
   }
 }
 
-const source = await load();
-if (!source.includes('PooriTel Hub') || !source.includes('createRoot') && !source.includes('export default function App')) {
-  throw new Error('The downloaded codenewv2 source does not look like the expected PooriTel Hub source.');
+let source = loadLocal();
+if (!source) {
+  let lastError;
+  for (const url of urls) {
+    try {
+      source = download(url);
+      break;
+    } catch (err) {
+      lastError = err;
+    }
+  }
+  if (!source) {
+    throw new Error(`Could not obtain codenewv2.txt. Put codenewv2.txt beside the project or check GitHub/CDN connectivity. ${lastError ?? ''}`);
+  }
 }
+
+if (!source.includes('PooriTel Hub') || !source.includes('export default function App')) {
+  throw new Error('The source does not look like the expected PooriTel codenewv2 build.');
+}
+
 await writeFile(target, source, 'utf8');
 console.log(`Prepared exact source: ${target}`);

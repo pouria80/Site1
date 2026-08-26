@@ -1,0 +1,1 @@
+export type Lang='fa'|'en';export type Theme='dark'|'light';export type Currency='USD'|'IRT';export type Scenario='active'|'clear'|'failed'|'verify';export type JourneyItem={type:string;k:string;amt?:string;tagK?:string;time:{en:string;fa:string}};export type Ticket={id:string;t:{en:string;fa:string}};

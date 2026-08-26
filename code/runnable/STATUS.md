@@ -1,0 +1,1 @@
+Prepared runnable wrappers for codenew v1 and v2. v2 uses the exact source blob from code/codenewv2.txt. v1 includes the original codenew.txt page plus a compatibility layer for its missing referenced modules.

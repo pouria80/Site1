@@ -1,0 +1,8 @@
+// Session-aware Worker wrapper. This file is intentionally standalone so the active Worker can import the shared auth handler without changing auth semantics.
+import { Client } from 'pg';
+const COOKIE='pooritel_session';
+function json(data,status=200,headers={}){return Response.json(data,{status,headers:{'Cache-Control':'no-store',...headers}})}
+function tokenFrom(req){const c=req.headers.get('Cookie')||'';const x=c.split(';').map(s=>s.trim()).find(s=>s.startsWith(COOKIE+'='));return x?x.slice(COOKIE.length+1):null}
+function b64(bytes){let s='';for(const b of bytes)s+=String.fromCharCode(b);return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/g,'')}
+async function hash(token){return b64(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(token))))}
+export async function currentSession(request,env){const token=tokenFrom(request);if(!token)return json({success:false,authenticated:false},401);let client;try{client=new Client({connectionString:env.HYPERDRIVE.connectionString});await client.connect();const h=await hash(token);const r=await client.query(`SELECT u.id,u.status,a.email,a.verified_at,s.expires_at FROM user_sessions s JOIN users u ON u.id=s.user_id JOIN auth_accounts a ON a.user_id=u.id AND a.provider='email' WHERE s.session_token_hash=$1 AND s.revoked_at IS NULL AND s.expires_at>NOW() AND u.status='active' ORDER BY s.created_at DESC LIMIT 1`,[h]);const a=r.rows[0];if(!a)return json({success:false,authenticated:false},401);return json({success:true,authenticated:true,user:{id:a.id,email:a.email,emailVerified:Boolean(a.verified_at)},expiresAt:a.expires_at})}finally{if(client)await client.end()}}

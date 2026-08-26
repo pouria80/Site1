@@ -1,0 +1,112 @@
+/* PooriTel Admin V2 — operations-first redesign */
+.admin{
+  --bg:#0a0e13;
+  --panel:#10161e;
+  --panel2:#151c26;
+  --panel3:#0d131a;
+  --line:rgba(255,255,255,.085);
+  --line-strong:rgba(255,255,255,.14);
+  --text:#f2f5f7;
+  --muted:#8b98a6;
+  --accent:#6ea8ff;
+  --accent-2:#8ab6ff;
+  --success:#4ed6a8;
+  --amber:#f1bb67;
+  --danger:#ef7b7b;
+  --shadow:0 18px 50px rgba(0,0,0,.20);
+  background:
+    radial-gradient(900px 420px at 70% -15%,rgba(66,126,255,.10),transparent 66%),
+    radial-gradient(700px 380px at 0% 100%,rgba(240,187,103,.05),transparent 70%),
+    var(--bg)!important;
+}
+.admin.light{
+  --bg:#eef1f5;
+  --panel:#fbfcfd;
+  --panel2:#f1f4f7;
+  --panel3:#ffffff;
+  --line:rgba(17,31,47,.10);
+  --line-strong:rgba(17,31,47,.16);
+  --text:#172332;
+  --muted:#718091;
+  --accent:#336ee8;
+  --accent-2:#5b8df0;
+  --success:#168a69;
+  --amber:#a86f18;
+  --danger:#b84f4f;
+  --shadow:0 18px 40px rgba(25,42,61,.09);
+}
+
+/* Remove the decorative greeting/orbit block: admin needs operational density. */
+.hero-line{display:none!important}
+
+.content{max-width:1540px;padding-top:20px!important}
+.stack{gap:14px!important}
+.metrics{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px!important}
+.metric{padding:16px 16px 14px!important;border-radius:14px!important;background:linear-gradient(180deg,var(--panel),var(--panel3))!important;box-shadow:none!important}
+.metric strong{font-size:25px!important;letter-spacing:-.03em}
+.metric b{font-weight:700}
+.metric:after{background:linear-gradient(90deg,transparent,var(--accent),transparent)!important}
+.spark i{background:linear-gradient(to top,rgba(110,168,255,.08),rgba(110,168,255,.48))!important}
+
+.grid2{grid-template-columns:1.15fr .85fr!important;gap:10px!important}
+.panel{border-radius:15px!important;box-shadow:var(--shadow)!important}
+.attention,.feed,.snapshot,.table-panel{padding:16px!important}
+.panel-head{margin-bottom:10px!important}
+.panel-head h2{font-size:16px!important}
+.eyebrow{letter-spacing:.16em!important;color:var(--accent)!important}
+
+.priority{padding:11px 8px!important;border-radius:11px!important}
+.priority:hover{transform:none!important;border-color:var(--line-strong)!important}
+.priority-icon{width:32px!important;height:32px!important;border-radius:9px!important;background:rgba(110,168,255,.08)!important;color:var(--accent)!important}
+.priority strong{font-size:10px!important}
+.priority small{font-size:8px!important}
+
+.feed-row{padding:8px 0!important}
+.feed-row i{background:var(--success)!important;box-shadow:0 0 8px color-mix(in srgb,var(--success) 55%,transparent)!important}
+.live-tag{color:var(--success)!important}
+
+.snapshot-grid{grid-template-columns:1.35fr .85fr .65fr!important;gap:10px!important}
+.chart,.donut,.mini-stack{border-radius:12px!important;background:var(--panel2)!important}
+.chart,.donut,.mini-stack{padding:13px!important}
+.bars{height:128px!important}
+.bars i{background:linear-gradient(to top,rgba(110,168,255,.10),rgba(110,168,255,.64))!important}
+.donut-ring{border-color:rgba(110,168,255,.14)!important;border-top-color:var(--accent)!important;border-right-color:var(--amber)!important}
+
+.page-head{align-items:end!important}
+.page-head h1{font-size:28px!important}
+.filters{gap:5px!important}
+.filter{border-radius:9px!important}
+.table-row{padding:12px 10px!important}
+
+.store{height:36px!important;background:linear-gradient(135deg,rgba(110,168,255,.14),rgba(91,141,240,.20))!important;border-color:rgba(110,168,255,.30)!important;color:var(--accent-2)!important;box-shadow:0 8px 22px rgba(51,110,232,.08)!important}
+.topbar{height:72px!important;padding:11px 24px!important;gap:14px!important}
+.search{min-width:330px!important}
+.topbtn,.search{background:var(--panel)!important;border-color:var(--line)!important}
+
+/* Make the overview read like an operational board, not a marketing page. */
+@media (min-width:1100px){
+  .metrics{position:relative}
+  .metrics:before{content:'CURRENT STATE';position:absolute;top:-14px;left:3px;font-size:7px;letter-spacing:.2em;color:var(--muted);font-weight:800}
+}
+
+@media (max-width:1000px){
+  .metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .grid2,.snapshot-grid{grid-template-columns:1fr!important}
+}
+
+@media (max-width:640px){
+  .content{padding:16px 14px 40px!important}
+  .topbar{padding:10px 14px!important;height:64px!important}
+  .search{min-width:0!important;flex:1!important}
+  .top-actions{gap:6px!important}
+  .store{padding:0 10px!important;font-size:8px!important}
+  .metrics{grid-template-columns:1fr 1fr!important;gap:8px!important}
+  .metric{padding:13px!important}
+  .metric strong{font-size:21px!important}
+}
+
+@media (max-width:420px){
+  .metrics{grid-template-columns:1fr!important}
+  .top-actions .search{display:none!important}
+  .store{font-size:7px!important}
+}

@@ -1,76 +1,51 @@
-type SidebarState = { collapsed: boolean };
-
-declare global { interface Window { __ptAdminV7?: { toggleSidebar: () => void } } }
+const radarText = (fa:boolean) => fa ? {
+  eyebrow:'هشدارهای عملیاتی', title:'چه چیزی بعدی نیاز به توجه دارد؟', desc:'موارد استثنایی قبل از تبدیل شدن به مشکل مشتری نمایش داده می‌شوند.', live:'زنده',
+  cards:[
+    ['پرداخت ناموفق / با تأخیر','۳','تلاش‌های پرداخت نیاز به بررسی دارند','بیشترین اثر','باز کردن صف ←'],
+    ['سفارش‌های در معرض SLA','۵','تحویل یا تأیید دیر شده است','اثر روی مشتری','بررسی ←'],
+    ['آگهی‌های دارای سیگنال ریسک','۲','قیمت، مالکیت یا دسته‌بندی نیاز به بررسی دارد','مدیریت آگهی','بررسی ←'],
+    ['سلامت سیستم / پرداخت','۹۹.۸٪','سرویس‌های اصلی به‌صورت عادی کار می‌کنند','آخرین بررسی: ۱ دقیقه','مشاهده سلامت ←']
+  ]
+} : {
+  eyebrow:'EXCEPTION RADAR', title:'What needs attention next', desc:'Operational exceptions surfaced before they become customer problems.', live:'LIVE',
+  cards:[
+    ['Failed / delayed payments','3','Payment attempts need review','Highest impact','Open queue →'],
+    ['Orders at SLA risk','5','Delivery or confirmation is late','Customer impact','Inspect →'],
+    ['Listings with risk signals','2','Price, ownership or category mismatch','Moderation','Review →'],
+    ['System / payments health','99.8%','Core services operating normally','Last check 1m','View health →']
+  ]
+};
 
 function addExceptionRadar(){
-  if(document.querySelector('.v7-exception')) return;
+  const existing=document.querySelector('.v7-exception');
+  if(existing) existing.remove();
   const headings=[...document.querySelectorAll('h2')];
   const flowHeading=headings.find(h=>(h.textContent||'').toLowerCase().includes('12-day money flow') || (h.textContent||'').includes('گردش مالی ۱۲ روز اخیر'));
   const flowPanel=flowHeading?.closest('.panel') as HTMLElement|null;
-  if(flowPanel){ flowPanel.classList.add('admin-v7-flow-removed'); flowPanel.remove(); }
-
-  const anchor=document.querySelector('.lower')?.parentElement || document.querySelector('.content .stack');
+  if(flowPanel) flowPanel.remove();
+  const anchor=document.querySelector('.content .stack');
   if(!anchor) return;
+  const fa=document.documentElement.lang==='fa';
+  const t=radarText(fa);
   const section=document.createElement('section');
   section.className='v7-exception';
-  section.innerHTML=`
-    <div class="v7-exception-head">
-      <div><span class="eyebrow">EXCEPTION RADAR</span><h2>What needs attention next</h2><p>Operational exceptions surfaced before they become customer problems.</p></div>
-      <span class="v7-live-chip">LIVE</span>
-    </div>
-    <div class="v7-exception-grid">
-      <div class="v7-exception-card warn"><span>Failed / delayed payments</span><strong class="amber">3</strong><small>Payment attempts need review</small><div class="v7-exception-meta"><em>Highest impact</em><b>Open queue →</b></div></div>
-      <div class="v7-exception-card danger"><span>Orders at SLA risk</span><strong class="red">5</strong><small>Delivery or confirmation is late</small><div class="v7-exception-meta"><em>Customer impact</em><b>Inspect →</b></div></div>
-      <div class="v7-exception-card warn"><span>Listings with risk signals</span><strong class="amber">2</strong><small>Price, ownership or category mismatch</small><div class="v7-exception-meta"><em>Moderation</em><b>Review →</b></div></div>
-      <div class="v7-exception-card good"><span>System / payments health</span><strong class="good">99.8%</strong><small>Core services operating normally</small><div class="v7-exception-meta"><em>Last check 1m</em><b>View health →</b></div></div>
-    </div>`;
-  const oldLower=document.querySelector('.lower');
-  if(oldLower) oldLower.replaceWith(section); else anchor.appendChild(section);
+  section.innerHTML=`<div class="v7-exception-head"><div><span class="eyebrow">${t.eyebrow}</span><h2>${t.title}</h2><p>${t.desc}</p></div><span class="v7-live-chip">${t.live}</span></div><div class="v7-exception-grid">${t.cards.map((c,i)=>`<div class="v7-exception-card ${i===1?'danger':i===3?'good':'warn'}"><span>${c[0]}</span><strong>${c[1]}</strong><small>${c[2]}</small><div class="v7-exception-meta"><em>${c[3]}</em><b>${c[4]}</b></div></div>`).join('')}</div>`;
+  anchor.appendChild(section);
 }
 
 function mountPersistentToggle(){
-  if(document.querySelector('.admin-v7-toggle')) return;
-  const admin=document.querySelector('.admin-v3') as HTMLElement|null;
-  if(!admin) return;
-  admin.classList.add('admin-v7-ready');
-  const btn=document.createElement('button');
-  btn.className='admin-v7-toggle';
-  btn.type='button';
-  btn.setAttribute('aria-label','Toggle sidebar');
-  btn.setAttribute('aria-expanded','true');
-  btn.innerHTML='<span class="v7-chevron">‹</span><span class="v7-pulse"></span>';
-  const state:SidebarState={collapsed:false};
-  const sync=()=>{
-    const sidebar=document.querySelector('.sidebar') as HTMLElement|null;
-    if(!sidebar) return;
-    state.collapsed=sidebar.classList.contains('collapsed');
-    btn.classList.toggle('is-collapsed',state.collapsed);
-    btn.setAttribute('aria-expanded',String(!state.collapsed));
-    (btn.querySelector('.v7-chevron') as HTMLElement).textContent=state.collapsed?'›':'‹';
-  };
-  btn.addEventListener('click',()=>{
-    const legacy=document.querySelector('.sidebar > .collapse') as HTMLButtonElement|null;
-    if(legacy) legacy.click();
-    else {
-      const sidebar=document.querySelector('.sidebar') as HTMLElement|null;
-      if(sidebar){ sidebar.classList.toggle('collapsed'); }
-      const main=document.querySelector('.main') as HTMLElement|null;
-      if(main) main.style.marginRight=sidebar?.classList.contains('collapsed')?'82px':'276px';
-    }
-    sync();
-  });
-  document.body.appendChild(btn);
-  const observer=new MutationObserver(sync);
-  observer.observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
-  sync();
-  window.__ptAdminV7={toggleSidebar:()=>btn.click()};
+  // The original React .collapse-fixed control is the only sidebar toggle.
+  // This runtime intentionally does not create another visible button.
+  const old=document.querySelector('.admin-v7-toggle');
+  if(old) old.remove();
+  const legacy=document.querySelector('.sidebar .collapse-fixed') as HTMLElement|null;
+  if(legacy) legacy.classList.add('v7-single-toggle');
 }
 
 function run(){
   mountPersistentToggle();
   addExceptionRadar();
-  // Re-check after React renders its page.
-  window.setTimeout(addExceptionRadar,120);
+  window.setTimeout(addExceptionRadar,150);
   window.setTimeout(addExceptionRadar,500);
 }
 

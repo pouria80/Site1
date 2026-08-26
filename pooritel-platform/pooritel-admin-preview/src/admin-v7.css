@@ -1,0 +1,38 @@
+/* PooriTel Admin V7 — cinematic polish + persistent sidebar control + exception-first overview */
+.admin-v7-ready{--v7-glow:rgba(27,178,168,.24)}
+/* Never lose sidebar control: the legacy internal control is hidden; one persistent control is mounted separately. */
+.admin-v7-ready .sidebar > .collapse,
+.admin-v7-ready .sidebar .collapse{display:none!important}
+.admin-v7-toggle{position:fixed;right:272px;top:92px;z-index:120;width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:color-mix(in srgb,var(--panel) 92%,transparent);color:var(--text);display:grid;place-items:center;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.10),0 0 0 1px rgba(27,178,168,.06);backdrop-filter:blur(14px);transition:right .22s ease,transform .2s ease,box-shadow .2s ease}
+.admin-v7-toggle:hover{transform:translateY(-1px);box-shadow:0 14px 38px rgba(0,0,0,.14),0 0 26px rgba(27,178,168,.18)}
+.admin-v7-toggle::before{content:'';position:absolute;inset:5px;border-radius:9px;border:1px solid rgba(27,178,168,.12);pointer-events:none}
+.admin-v7-toggle .v7-chevron{font-size:17px;line-height:1;font-weight:800;position:relative;z-index:1}
+.admin-v7-toggle.is-collapsed{right:82px}
+.admin-v7-toggle.is-collapsed .v7-chevron{transform:rotate(180deg)}
+.admin-v7-toggle .v7-pulse{position:absolute;right:5px;bottom:5px;width:5px;height:5px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:v7pulse 2s ease-in-out infinite}
+/* Kill the obsolete FLOW panel if a stale render survives for a moment. */
+.admin-v7-flow-removed{display:none!important}
+.v7-exception{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:15px;box-shadow:0 10px 30px rgba(35,55,46,.05);position:relative;overflow:hidden}
+.v7-exception::after{content:'';position:absolute;inset:auto 0 0 0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),var(--sage),transparent);opacity:.55}
+.v7-exception-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}
+.v7-exception-head h2{font-size:15px;margin:5px 0 0}
+.v7-exception-head p{font-size:8px;color:var(--muted);margin:4px 0 0}
+.v7-live-chip{padding:5px 8px;border-radius:999px;background:rgba(27,178,168,.08);color:var(--cyan);font-size:8px;font-weight:800}
+.v7-exception-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.v7-exception-card{border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:11px;transition:.2s;position:relative;overflow:hidden}
+.v7-exception-card:hover{transform:translateY(-2px);border-color:rgba(27,178,168,.22);box-shadow:0 10px 24px rgba(27,178,168,.07)}
+.v7-exception-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent)}
+.v7-exception-card.warn::before{background:var(--amber)}.v7-exception-card.danger::before{background:var(--red)}.v7-exception-card.good::before{background:var(--good)}
+.v7-exception-card span,.v7-exception-card strong,.v7-exception-card small{display:block}
+.v7-exception-card span{font-size:8px;color:var(--muted)}.v7-exception-card strong{font-size:18px;margin:5px 0 3px}.v7-exception-card small{font-size:7.5px;color:var(--muted)}
+.v7-exception-card strong.cyan{color:var(--cyan)}.v7-exception-card strong.amber{color:var(--amber)}.v7-exception-card strong.red{color:var(--red)}.v7-exception-card strong.good{color:var(--good)}
+.v7-exception-meta{display:flex;justify-content:space-between;align-items:center;margin-top:9px;padding-top:8px;border-top:1px solid var(--line)}
+.v7-exception-meta em{font-style:normal;font-size:7px;color:var(--muted)}.v7-exception-meta b{font-size:7px;color:var(--cyan)}
+.admin-v7-ready .kpi,.admin-v7-ready .panel,.admin-v7-ready .queue button,.admin-v7-ready .walletbox{animation:v7rise .46s ease both}
+.admin-v7-ready .kpi:nth-child(2){animation-delay:.04s}.admin-v7-ready .kpi:nth-child(3){animation-delay:.08s}.admin-v7-ready .kpi:nth-child(4){animation-delay:.12s}
+.admin-v7-ready .panel{animation-delay:.08s}
+@keyframes v7rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes v7pulse{0%,100%{transform:scale(1);opacity:.65}50%{transform:scale(1.35);opacity:1}}
+@media(max-width:1120px){.admin-v7-toggle{right:272px}.admin-v7-toggle.is-collapsed{right:82px}.v7-exception-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:780px){.admin-v7-toggle{right:12px;top:70px;width:40px;height:40px}.admin-v7-toggle.is-collapsed{right:12px}.v7-exception-grid{grid-template-columns:1fr 1fr}.v7-exception-card strong{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.admin-v7-ready .kpi,.admin-v7-ready .panel,.admin-v7-ready .queue button,.admin-v7-ready .walletbox{animation:none}.admin-v7-toggle .v7-pulse{animation:none}}

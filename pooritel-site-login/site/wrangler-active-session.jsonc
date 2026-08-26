@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "pooritel",
+  "main": "./src/index-session-live.js",
+  "compatibility_date": "2026-08-25",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": { "directory": "./public", "binding": "ASSETS" },
+  "hyperdrive": [{ "binding": "HYPERDRIVE", "id": "2af738a7f39f4e91ac036f4f33af4a2b" }]
+}

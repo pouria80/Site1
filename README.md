@@ -1,9 +1,8 @@
 # PooriTel
 
-## Active project
+## Active projects
 
-The only active project on `main` is:
+- `pooritel-site-login/` — current main PooriTel site / application.
+- `pooritel-hub-final/` — new customer dashboard Hub that will be connected to the main site.
 
-- `pooritel-hub-final/` — standalone React + Vite customer dashboard Hub.
-
-Legacy dashboard prototypes and previous experiments live on the separate `dashboard-archive` branch and are intentionally kept out of `main`.
+Legacy dashboard experiments are kept on the separate `dashboard-archive` branch and are not part of `main`.

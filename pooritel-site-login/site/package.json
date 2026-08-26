@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "build:auth": "npm install --prefix auth-app && npm run build --prefix auth-app",
+    "build:dashboard": "node package-dashboard-build.mjs",
+    "build": "npm run build:auth && npm run build:dashboard",
     "dev": "wrangler dev",
-    "deploy": "npm run build:auth && wrangler deploy",
+    "deploy": "npm run build && wrangler deploy",
     "preview": "wrangler dev",
-    "check": "wrangler deploy --dry-run"
+    "check": "npm run build && wrangler deploy --dry-run"
   },
   "dependencies": {
     "pg": "^8.23.0"

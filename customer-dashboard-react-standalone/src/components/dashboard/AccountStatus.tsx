@@ -1,4 +1,25 @@
 import React from 'react';
 import '../../css/dashboard-status.css';
-interface Props{status:{emailVerified:boolean;accountActive:boolean;secureStatus:boolean;kycStatus?:boolean}}
-export default function AccountStatus({status}:Props){const checks=[['Email Verified',status.emailVerified,'✓'],['Account Active',status.accountActive,'●'],['Security Status',status.secureStatus,'🔒'],...(status.kycStatus!==undefined?[['Identity Verified',status.kycStatus,'📋'] as const]:[])];return <section className="account-status glass"><div className="section-header"><h3>Account Health</h3></div><div className="status-checks">{checks.map(([label,ok,icon])=><div key={label as string} className={`status-item ${ok?'verified':'pending'}`}><span className="status-icon">{icon}</span><span className="status-label">{label}</span></div>)}</div>{!status.emailVerified&&<div className="status-action"><button className="btn-outline">Verify Email</button></div>}</section>}
+
+interface Props {
+  status: { emailVerified: boolean; accountActive: boolean; secureStatus: boolean; kycStatus?: boolean };
+}
+
+export default function AccountStatus({ status }: Props) {
+  const checks = [
+    { label: 'Email Verified', ok: status.emailVerified, icon: '✓' },
+    { label: 'Account Active', ok: status.accountActive, icon: '●' },
+    { label: 'Security Status', ok: status.secureStatus, icon: '🔒' },
+    ...(status.kycStatus !== undefined ? [{ label: 'Identity Verified', ok: status.kycStatus, icon: '📋' }] : []),
+  ];
+
+  return <section className="account-status glass">
+    <div className="section-header"><h3>Account Health</h3></div>
+    <div className="status-checks">
+      {checks.map(check => <div key={check.label} className={`status-item ${check.ok ? 'verified' : 'pending'}`}>
+        <span className="status-icon">{check.icon}</span><span className="status-label">{check.label}</span>
+      </div>)}
+    </div>
+    {!status.emailVerified && <div className="status-action"><button className="btn-outline">Verify Email</button></div>}
+  </section>;
+}

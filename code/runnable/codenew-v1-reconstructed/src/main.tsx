@@ -1,0 +1,1 @@
+import React from 'react';import{createRoot}from'react-dom/client';import CustomerHub from './pages/CustomerHub';import'./styles/hub.css';createRoot(document.getElementById('root')!).render(<React.StrictMode><CustomerHub/></React.StrictMode>);

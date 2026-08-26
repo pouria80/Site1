@@ -1,0 +1,1 @@
+export {WalletCard as default} from './Shared';

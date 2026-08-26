@@ -1,0 +1,41 @@
+/* Exact final PooriTel Hub brand layer */
+.app{--bg:#f5f2e9;--panel:#fffdf7;--panel2:#eef2ea;--line:rgba(31,46,39,.11);--muted:#6f7b73;--text:#18221d;--accent:#7f9b75;--accent2:#b9c8aa;--teal:#27c7d4;--violet:#8a84c9;--danger:#d9685f;--brandGlow:rgba(39,199,212,.20)}
+.app[data-theme=dark]{--bg:#0f1713;--panel:#151f1a;--panel2:#1b2821;--line:rgba(220,235,225,.095);--muted:#91a097;--text:#edf4ee;--accent:#a8bd9d;--accent2:#6f8970;--teal:#37d7df;--violet:#9d97d6;--danger:#ec766b;--brandGlow:rgba(55,215,223,.20)}
+.atmo{background:radial-gradient(760px 470px at 84% -10%,rgba(39,199,212,.13),transparent 66%),radial-gradient(680px 460px at 8% 108%,rgba(127,155,117,.18),transparent 68%),radial-gradient(520px 360px at 62% 48%,rgba(185,200,170,.10),transparent 72%)}
+.app[data-theme=dark] .atmo{background:radial-gradient(760px 470px at 84% -10%,rgba(55,215,223,.12),transparent 66%),radial-gradient(680px 460px at 8% 108%,rgba(111,137,112,.12),transparent 68%),radial-gradient(520px 360px at 62% 48%,rgba(168,189,157,.05),transparent 72%)}
+.grain{opacity:.025}
+.brandmark,.avatar{background:linear-gradient(135deg,var(--accent),var(--teal));color:#14221b;box-shadow:0 8px 24px rgba(39,199,212,.16)}
+.nav.active{background:linear-gradient(90deg,transparent,rgba(127,155,117,.13));border-color:rgba(127,155,117,.18)}
+.nav.active:before{background:linear-gradient(var(--accent),var(--teal));box-shadow:0 0 16px var(--brandGlow)}
+.iconBtn:hover,.langBtn:hover{color:var(--teal);border-color:rgba(39,199,212,.40)}
+.statusDot{background:var(--teal);box-shadow:0 0 14px var(--brandGlow)}
+.hero{background:radial-gradient(640px 360px at 82% 10%,rgba(39,199,212,.09),transparent 64%),radial-gradient(560px 300px at 2% 100%,rgba(127,155,117,.12),transparent 64%),var(--panel);box-shadow:0 22px 70px rgba(28,44,35,.13)}
+.app[data-theme=dark] .hero{box-shadow:0 22px 70px rgba(0,0,0,.28)}
+.scan{background:linear-gradient(transparent,rgba(39,199,212,.03),rgba(39,199,212,.10),rgba(39,199,212,.03),transparent)}
+.core:before{border-color:rgba(127,155,117,.26)}
+.core:after{border-color:rgba(39,199,212,.22)}
+.coreGlow{background:radial-gradient(circle,#d9e7d2 0%,rgba(39,199,212,.50) 22%,rgba(39,199,212,.08) 58%,transparent 74%)}
+.orbital{border-color:rgba(127,155,117,.24)}
+.o2{border-color:rgba(39,199,212,.18)}
+.orbital i{background:var(--teal);box-shadow:0 0 15px var(--teal)}
+.stage.done i{color:var(--teal);border-color:rgba(39,199,212,.45)}
+.stage.current i{border-color:var(--teal);box-shadow:0 0 16px var(--brandGlow)}
+.stage.current i:after{border-color:var(--teal)}
+.primary{background:linear-gradient(135deg,var(--accent),var(--teal));color:#102019;box-shadow:0 10px 28px var(--brandGlow)}
+.walletCard:after{background:radial-gradient(circle,rgba(39,199,212,.12),transparent 70%)}
+.quickCard:hover{border-color:rgba(39,199,212,.42);box-shadow:0 18px 42px rgba(15,35,29,.20),0 0 28px var(--brandGlow)}
+.quickIcon{background:rgba(39,199,212,.10);color:var(--teal)}
+.quickCard:before{background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.13),transparent 65%)}
+.pcard:hover{border-color:rgba(39,199,212,.45);box-shadow:0 22px 52px rgba(13,36,28,.20),0 0 30px var(--brandGlow)}
+.ctx{border-color:rgba(39,199,212,.32);color:var(--teal);background:rgba(12,24,20,.46)}
+.fav:hover,.fav.on{color:var(--teal);border-color:rgba(39,199,212,.48);background:rgba(39,199,212,.10)}
+.pcard:hover .price,.pview{color:var(--teal);text-shadow:none}
+.sectionHead .muted,.sub,.walletLabel,.witem .wt span,.jbody span,.notifItem small,.user small{color:var(--muted)}
+.app{direction:ltr!important}
+.app[data-lang=fa] .search input,.app[data-lang=fa] textarea,.app[data-lang=fa] .heroText,.app[data-lang=fa] .sectionHead,.app[data-lang=fa] .walletCard,.app[data-lang=fa] .quickBlock,.app[data-lang=fa] .worldCard,.app[data-lang=fa] .journeyCard,.app[data-lang=fa] .supportCard,.app[data-lang=fa] .nav label,.app[data-lang=fa] .group,.app[data-lang=fa] .brand,.app[data-lang=fa] .user,.app[data-lang=fa] .stageList,.app[data-lang=fa] .notifItem,.app[data-lang=fa] .notifHead{direction:rtl}
+.app[data-lang=en] .search input,.app[data-lang=en] textarea,.app[data-lang=en] .heroText,.app[data-lang=en] .sectionHead,.app[data-lang=en] .walletCard,.app[data-lang=en] .quickBlock,.app[data-lang=en] .worldCard,.app[data-lang=en] .journeyCard,.app[data-lang=en] .supportCard,.app[data-lang=en] .nav label,.app[data-lang=en] .group,.app[data-lang=en] .brand,.app[data-lang=en] .user,.app[data-lang=en] .stageList,.app[data-lang=en] .notifItem,.app[data-lang=en] .notifHead{direction:ltr}
+.app[data-lang=fa] .search input{text-align:right}.app[data-lang=en] .search input{text-align:left}
+.app[data-lang=fa] .hero,.app[data-lang=en] .hero,.app[data-lang=fa] .moneyGrid,.app[data-lang=en] .moneyGrid,.app[data-lang=fa] .quickGrid,.app[data-lang=en] .quickGrid,.app[data-lang=fa] .worldGrid,.app[data-lang=en] .worldGrid,.app[data-lang=fa] .discoverGrid,.app[data-lang=en] .discoverGrid,.app[data-lang=fa] .bottomGrid,.app[data-lang=en] .bottomGrid{direction:ltr}
+.app[data-lang=fa] .heroText,.app[data-lang=fa] .sectionTitle,.app[data-lang=fa] .walletCard,.app[data-lang=fa] .quickBlock,.app[data-lang=fa] .worldCard,.app[data-lang=fa] .journeyCard,.app[data-lang=fa] .supportCard{text-align:right}
+.app[data-lang=en] .heroText,.app[data-lang=en] .sectionTitle,.app[data-lang=en] .walletCard,.app[data-lang=en] .quickBlock,.app[data-lang=en] .worldCard,.app[data-lang=en] .journeyCard,.app[data-lang=en] .supportCard{text-align:left}
+.hero h1{min-height:2.1em}.hero p{min-height:3.2em}.nav label{min-width:122px}.sectionHead h2{min-height:1.6em}.supportCard h2{min-height:2.5em}

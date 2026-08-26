@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   ArrowUpRight, Bell, ChevronLeft, ChevronRight, Clock3, Gamepad2,
-  LayoutDashboard, Moon, Plus, Search, Settings, ShieldCheck,
-  ShoppingBag, Sparkles, Sun, Tag, UserRound, WalletCards, Zap
+  LayoutDashboard, Languages, Moon, Plus, Search, Settings, ShieldCheck,
+  ShoppingBag, Sparkles, Sun, Tag, UserRound, WalletCards, Zap, Headphones
 } from 'lucide-react';
 import './style.css';
 import './theme-overrides.css';
@@ -21,6 +21,7 @@ const nav = [
   { label: 'پروفایل', icon: UserRound },
   { label: 'امنیت و احراز', icon: ShieldCheck },
   { label: 'تنظیمات', icon: Settings },
+  { label: 'پشتیبانی و تیکت', icon: Headphones },
 ];
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
   const [usd, setUsd] = useState(true);
   const [active, setActive] = useState(0);
   const [dark, setDark] = useState(false);
+  const [lang, setLang] = useState<'FA' | 'EN'>('FA');
 
   return (
     <div className={`app ${open ? 'open' : 'closed'} ${dark ? 'theme-dark' : 'theme-light'}`}>
@@ -40,24 +42,29 @@ function App() {
           {open ? <ChevronRight /> : <ChevronLeft />}
         </button>
 
-        <div className="side-search"><Search size={15} /><span>جستجو در داشبورد</span></div>
+        <div className="side-search"><Search size={15} /><span>{lang === 'FA' ? 'جستجو در داشبورد' : 'Search dashboard'}</span></div>
 
         <nav>
           <div className="label">WORKSPACE</div>
           {nav.slice(0, 3).map(({ label, icon: Icon }, i) => (
             <button key={label} className={active === i ? 'active' : ''} onClick={() => setActive(i)}>
-              <Icon /><span>{label}</span>{active === i && <i />}
+              <Icon /><span>{lang === 'FA' ? label : ['Overview', 'Wallet', 'Orders'][i]}</span>{active === i && <i />}
             </button>
           ))}
           <div className="label">ACCOUNT</div>
           {nav.slice(3).map(({ label, icon: Icon }, i) => (
             <button key={label} className={active === i + 3 ? 'active' : ''} onClick={() => setActive(i + 3)}>
-              <Icon /><span>{label}</span>{active === i + 3 && <i />}
+              <Icon /><span>{lang === 'FA' ? label : ['Profile', 'Security & Verify', 'Settings', 'Support & Tickets'][i]}</span>{active === i + 3 && <i />}
             </button>
           ))}
         </nav>
 
-        <div className="side-footer-note"><Zap size={13} /><span>POORITEL ENGINE · ONLINE</span></div>
+        <div className="side-footer-actions">
+          <button className="lang-switch" onClick={() => setLang(v => v === 'FA' ? 'EN' : 'FA')} aria-label="تغییر زبان">
+            <Languages size={14} /><span>{lang}</span><small>{lang === 'FA' ? 'English' : 'فارسی'}</small>
+          </button>
+          <div className="side-footer-note"><Zap size={13} /><span>POORITEL ENGINE · ONLINE</span></div>
+        </div>
         <div className="user-mini"><div className="avatar">P</div><div className="user-copy"><b>Pouria</b><span>customer@example.com</span></div></div>
       </aside>
 
@@ -65,8 +72,8 @@ function App() {
         <header>
           <div className="welcome">
             <div className="eyebrow"><Gamepad2 /> PLAYER HUB · CUSTOMER</div>
-            <h1>سلام پوریا، آماده‌ای؟</h1>
-            <p>مهم‌ترین وضعیت حساب و خریدهایت همین‌جا جمع شده.</p>
+            <h1>{lang === 'FA' ? 'سلام پوریا، آماده‌ای؟' : 'Welcome back, Pouria'}</h1>
+            <p>{lang === 'FA' ? 'مهم‌ترین وضعیت حساب و خریدهایت همین‌جا جمع شده.' : 'Your most important account and purchase signals, in one place.'}</p>
           </div>
           <div className="header-actions">
             <button className="icon-btn theme-toggle" onClick={() => setDark(v => !v)} aria-label="تغییر تم">
@@ -77,7 +84,7 @@ function App() {
           </div>
         </header>
 
-        <section className="hero">
+        <section className="hero compact-hero">
           <div className="hero-placeholder-art" aria-hidden="true">
             <div className="placeholder-core"><Sparkles /></div>
             <div className="placeholder-ring ring-a" />
@@ -95,10 +102,10 @@ function App() {
                 <button className={!usd ? 'on' : ''} onClick={() => setUsd(false)}>IRT</button>
               </div>
             </div>
-            <p>یک موجودی نمایشی · قابل تغییر توسط خودت</p>
+            <p>{lang === 'FA' ? 'یک موجودی نمایشی · قابل تغییر توسط خودت' : 'Single display balance · switchable by you'}</p>
             <div className="hero-actions">
-              <button className="primary"><Plus /> شارژ کیف پول</button>
-              <button className="ghost"><ArrowUpRight /> برداشت</button>
+              <button className="primary"><Plus /> {lang === 'FA' ? 'شارژ کیف پول' : 'Add funds'}</button>
+              <button className="ghost"><ArrowUpRight /> {lang === 'FA' ? 'برداشت' : 'Withdraw'}</button>
             </div>
           </div>
           <div className="hero-visual">
@@ -110,32 +117,32 @@ function App() {
         </section>
 
         <section className="mini-grid">
-          <div className="mini-card compact-balance"><div className="mini-icon cyan"><WalletCards /></div><div><span>AVAILABLE</span><b>{usd ? '$124.50' : '۱۲٬۴۵۰٬۰۰۰'}</b></div><small>+ شارژ سریع</small></div>
-          <div className="mini-card"><div className="mini-icon purple"><ShoppingBag /></div><div><span>ACTIVE ORDERS</span><b>03</b></div><small>۱ مورد نیازمند بررسی</small></div>
-          <div className="mini-card amber"><div className="mini-icon amber"><Tag /></div><div><span>MARKET PICK</span><b>−20%</b></div><small>پیشنهاد ویژه امروز</small></div>
+          <div className="mini-card compact-balance"><div className="mini-icon cyan"><WalletCards /></div><div><span>AVAILABLE</span><b>{usd ? '$124.50' : '۱۲٬۴۵۰٬۰۰۰'}</b></div><small>{lang === 'FA' ? '+ شارژ سریع' : '+ Quick add'}</small></div>
+          <div className="mini-card"><div className="mini-icon purple"><ShoppingBag /></div><div><span>ACTIVE ORDERS</span><b>03</b></div><small>{lang === 'FA' ? '۱ مورد نیازمند بررسی' : '1 needs attention'}</small></div>
+          <div className="mini-card amber"><div className="mini-icon amber"><Tag /></div><div><span>MARKET PICK</span><b>−20%</b></div><small>{lang === 'FA' ? 'پیشنهاد ویژه امروز' : 'Featured today'}</small></div>
         </section>
 
         <section className="quick">
-          <div className="section-title"><span>دسترسی سریع</span><small>۳ عملیات اصلی</small></div>
+          <div className="section-title"><span>{lang === 'FA' ? 'دسترسی سریع' : 'Quick actions'}</span><small>{lang === 'FA' ? '۳ عملیات اصلی' : '3 core actions'}</small></div>
           <div className="quick-grid">
-            <button className="qcard q1"><div className="qicon"><Plus /></div><div><b>شارژ کیف پول</b><span>افزایش موجودی</span></div><ArrowUpRight /></button>
-            <button className="qcard q2"><div className="qicon"><ArrowUpRight /></div><div><b>برداشت</b><span>درخواست برداشت</span></div><ArrowUpRight /></button>
-            <button className="qcard q3"><div className="qicon"><ShoppingBag /></div><div><b>سفارش‌های من</b><span>۳ سفارش اخیر</span></div><ArrowUpRight /></button>
+            <button className="qcard q1"><div className="qicon"><Plus /></div><div><b>{lang === 'FA' ? 'شارژ کیف پول' : 'Add funds'}</b><span>{lang === 'FA' ? 'افزایش موجودی' : 'Increase balance'}</span></div><ArrowUpRight /></button>
+            <button className="qcard q2"><div className="qicon"><ArrowUpRight /></div><div><b>{lang === 'FA' ? 'برداشت' : 'Withdraw'}</b><span>{lang === 'FA' ? 'درخواست برداشت' : 'Request payout'}</span></div><ArrowUpRight /></button>
+            <button className="qcard q3"><div className="qicon"><ShoppingBag /></div><div><b>{lang === 'FA' ? 'سفارش‌های من' : 'My orders'}</b><span>{lang === 'FA' ? '۳ سفارش اخیر' : '3 recent orders'}</span></div><ArrowUpRight /></button>
           </div>
         </section>
 
         <section className="grid">
           <div className="panel orders">
-            <div className="panel-head"><div><span className="eyebrow"><Clock3 /> LATEST DROP</span><h2>آخرین سفارش‌ها</h2></div><button className="text-btn">همه سفارش‌ها <ArrowUpRight /></button></div>
-            {orders.map(o => <div className="order" key={o.id}><div className="product-icon"><ShoppingBag /></div><div className="od"><b>{o.name}</b><span>#{o.id}</span></div><div className="oa"><b>{o.amount}</b><span className={o.status === 'تکمیل شده' ? 'done' : 'pending'}>{o.status}</span></div></div>)}
+            <div className="panel-head"><div><span className="eyebrow"><Clock3 /> LATEST DROP</span><h2>{lang === 'FA' ? 'آخرین سفارش‌ها' : 'Recent orders'}</h2></div><button className="text-btn">{lang === 'FA' ? 'همه سفارش‌ها' : 'View all'} <ArrowUpRight /></button></div>
+            {orders.map(o => <div className="order" key={o.id}><div className="product-icon"><ShoppingBag /></div><div className="od"><b>{o.name}</b><span>#{o.id}</span></div><div className="oa"><b>{o.amount}</b><span className={o.status === 'تکمیل شده' ? 'done' : 'pending'}>{lang === 'FA' ? o.status : (o.status === 'تکمیل شده' ? 'Completed' : 'Reviewing')}</span></div></div>)}
           </div>
           <div className="panel promo">
             <div className="promo-art"><span className="promo-glow" /><div className="promo-mark">P</div></div>
-            <div className="promo-copy"><span className="eyebrow"><Sparkles /> FEATURED DROP</span><h2>Telegram Premium</h2><p>یک پیشنهاد ویژه برای خرید بعدی‌ات.</p><div className="promo-bottom"><strong>تا ۲۰٪ تخفیف</strong><button className="promo-btn">مشاهده محصول <ArrowUpRight /></button></div></div>
+            <div className="promo-copy"><span className="eyebrow"><Sparkles /> FEATURED DROP</span><h2>Telegram Premium</h2><p>{lang === 'FA' ? 'یک پیشنهاد ویژه برای خرید بعدی‌ات.' : 'A featured offer for your next purchase.'}</p><div className="promo-bottom"><strong>{lang === 'FA' ? 'تا ۲۰٪ تخفیف' : 'Up to 20% off'}</strong><button className="promo-btn">{lang === 'FA' ? 'مشاهده محصول' : 'View product'} <ArrowUpRight /></button></div></div>
           </div>
         </section>
 
-        <footer><span>آخرین به‌روزرسانی · همین الان</span><span>POORITEL · CUSTOMER SPACE</span></footer>
+        <footer><span>{lang === 'FA' ? 'آخرین به‌روزرسانی · همین الان' : 'Updated · just now'}</span><span>POORITEL · CUSTOMER SPACE</span></footer>
       </main>
     </div>
   );

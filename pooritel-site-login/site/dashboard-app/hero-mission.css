@@ -1,0 +1,276 @@
+/* PooriTel Hub — cinematic Mission Ribbon / non-card order journey */
+.heroVisual{
+  position:relative;
+  min-height:360px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  overflow:hidden;
+}
+
+/* Remove the old circular orbit language entirely. */
+.heroVisual .orbital{display:none!important}
+
+/* Atmospheric field instead of orbit rings. */
+.heroVisual::before{
+  content:'';
+  position:absolute;
+  left:7%;
+  right:7%;
+  top:4%;
+  height:230px;
+  border-radius:50%;
+  background:
+    radial-gradient(closest-side, color-mix(in srgb,var(--teal) 12%,transparent), transparent 70%),
+    radial-gradient(closest-side, color-mix(in srgb,var(--accent) 10%,transparent), transparent 68%);
+  filter:blur(16px);
+  opacity:.9;
+  pointer-events:none;
+}
+
+.heroVisual::after{
+  content:'';
+  position:absolute;
+  left:10%;
+  right:10%;
+  top:48%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--line) 10%,color-mix(in srgb,var(--teal) 20%,var(--line)) 50%,var(--line) 90%,transparent);
+  box-shadow:0 0 28px color-mix(in srgb,var(--teal) 12%,transparent);
+  pointer-events:none;
+}
+
+/* Replace the old orb with a compact destination device. */
+.core{
+  width:176px!important;
+  height:176px!important;
+  margin-top:28px;
+  border-radius:32% 68% 58% 42% / 36% 42% 58% 64%!important;
+  transform:rotate(-10deg);
+  background:
+    radial-gradient(circle at 32% 28%,rgba(255,255,255,.48),transparent 18%),
+    radial-gradient(circle at 62% 62%,color-mix(in srgb,var(--teal) 42%,transparent),transparent 58%),
+    linear-gradient(145deg,color-mix(in srgb,var(--panel2) 95%,white),color-mix(in srgb,var(--panel) 82%,var(--teal)));
+  border:1px solid color-mix(in srgb,var(--teal) 36%,var(--line));
+  box-shadow:
+    0 24px 70px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.28),
+    0 0 42px color-mix(in srgb,var(--teal) 13%,transparent);
+  overflow:visible;
+}
+
+.core::before{
+  content:'';
+  position:absolute;
+  inset:-10px;
+  border-radius:28% 72% 62% 38% / 38% 38% 62% 62%;
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  transform:rotate(17deg);
+  animation:missionHalo 9s ease-in-out infinite;
+}
+
+.core::after{display:none!important}
+
+.coreGlow{
+  inset:28px!important;
+  background:
+    radial-gradient(circle at 50% 46%,rgba(255,255,255,.72),transparent 16%),
+    radial-gradient(circle,var(--teal) 0%,color-mix(in srgb,var(--teal) 38%,transparent) 26%,transparent 72%)!important;
+  filter:blur(5px)!important;
+  animation:missionBreathe 3.8s ease-in-out infinite!important;
+}
+
+.core strong{
+  transform:rotate(10deg);
+  font-size:36px!important;
+  letter-spacing:-.07em;
+  text-shadow:0 8px 24px rgba(0,0,0,.14);
+}
+
+.core span{
+  transform:rotate(10deg);
+  bottom:36px!important;
+  letter-spacing:.22em!important;
+  color:var(--text)!important;
+  opacity:.7;
+}
+
+/* The order status becomes a single cinematic ribbon, not cards. */
+.stageList{
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  bottom:10px!important;
+  width:auto!important;
+  min-width:0!important;
+  padding:0 6px!important;
+  border:0!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:0!important;
+  align-items:start;
+}
+
+.stageList::before{
+  content:'';
+  position:absolute;
+  left:8%;
+  right:8%;
+  top:15px;
+  height:2px;
+  background:linear-gradient(90deg,
+    color-mix(in srgb,var(--teal) 60%,transparent) 0%,
+    color-mix(in srgb,var(--teal) 60%,transparent) 44%,
+    color-mix(in srgb,var(--accent) 78%,transparent) 58%,
+    color-mix(in srgb,var(--line) 90%,transparent) 100%);
+  opacity:.8;
+}
+
+.stageList::after{
+  content:'';
+  position:absolute;
+  top:14px;
+  left:8%;
+  width:24%;
+  height:4px;
+  border-radius:10px;
+  background:linear-gradient(90deg,transparent,var(--teal),transparent);
+  filter:blur(1px);
+  box-shadow:0 0 18px color-mix(in srgb,var(--teal) 40%,transparent);
+  animation:ribbonTravel 4.6s linear infinite;
+  pointer-events:none;
+}
+
+.stage{
+  position:relative;
+  z-index:2;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:7px!important;
+  min-height:96px!important;
+  padding:0!important;
+  margin:0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  color:var(--muted);
+  text-align:center!important;
+}
+
+.stage i{
+  width:30px!important;
+  height:30px!important;
+  border-radius:50%!important;
+  display:grid!important;
+  place-items:center!important;
+  background:var(--panel)!important;
+  border:1px solid color-mix(in srgb,var(--muted) 28%,var(--line))!important;
+  box-shadow:0 8px 20px rgba(0,0,0,.12)!important;
+}
+
+.stage.done i{
+  color:var(--teal)!important;
+  border-color:color-mix(in srgb,var(--teal) 52%,var(--line))!important;
+  background:color-mix(in srgb,var(--teal) 8%,var(--panel))!important;
+}
+
+.stage.current i{
+  width:34px!important;
+  height:34px!important;
+  color:var(--text)!important;
+  border-color:var(--accent)!important;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 22%,var(--panel)),var(--panel))!important;
+  box-shadow:
+    0 0 0 7px color-mix(in srgb,var(--accent) 8%,transparent),
+    0 0 28px color-mix(in srgb,var(--accent) 26%,transparent)!important;
+  animation:currentBeacon 2.2s ease-in-out infinite;
+}
+
+.stage.current i::after{display:none!important}
+
+.stage b{
+  font-size:11px!important;
+  line-height:1.2!important;
+  color:var(--text)!important;
+  font-weight:700!important;
+  letter-spacing:.01em;
+  white-space:nowrap;
+}
+
+.stage small{
+  font-size:9px!important;
+  line-height:1.15!important;
+  color:var(--muted)!important;
+  white-space:nowrap;
+}
+
+.stage.current small{
+  color:var(--accent)!important;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+/* A tiny destination marker connects the journey to the core. */
+.stage.current::before{
+  content:'';
+  position:absolute;
+  top:-70px;
+  left:50%;
+  width:1px;
+  height:56px;
+  transform:translateX(-50%);
+  background:linear-gradient(var(--accent),transparent);
+  opacity:.65;
+}
+
+.stage.current::after{
+  content:'';
+  position:absolute;
+  top:-77px;
+  left:50%;
+  width:5px;
+  height:5px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 14px var(--accent);
+  animation:destinationBlink 2.2s ease-in-out infinite;
+}
+
+/* Give the entire hero a cinematic arrival. */
+.heroVisual .core,
+.heroVisual .stageList{
+  animation:heroArrival .8s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.heroVisual .stageList{animation-delay:.12s}
+
+@keyframes missionHalo{0%,100%{transform:rotate(17deg) scale(1)}50%{transform:rotate(31deg) scale(1.03)}}
+@keyframes missionBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+@keyframes currentBeacon{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes destinationBlink{0%,100%{opacity:.35;transform:translateX(-50%) scale(.7)}50%{opacity:1;transform:translateX(-50%) scale(1.25)}}
+@keyframes ribbonTravel{0%{transform:translateX(0);opacity:.2}50%{opacity:1}100%{transform:translateX(300%);opacity:.2}}
+@keyframes heroArrival{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+@media (max-width:900px){
+  .heroVisual{min-height:330px}
+  .stageList{bottom:4px!important}
+}
+
+@media (max-width:720px){
+  .heroVisual{min-height:430px}
+  .stageList{grid-template-columns:repeat(4,1fr)!important;padding:0!important}
+  .stage b{font-size:10px!important}
+  .stage small{font-size:8px!important}
+  .stage.current::before,.stage.current::after{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .heroVisual *,
+  .heroVisual::after,
+  .heroVisual::before{animation:none!important}
+}

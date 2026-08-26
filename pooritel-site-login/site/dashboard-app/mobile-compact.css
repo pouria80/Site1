@@ -1,0 +1,87 @@
+/* PooriTel Hub — compact mobile composition. Desktop/tablet remain untouched. */
+@media (max-width: 767px) {
+  .content{gap:12px !important;padding:10px 10px 26px !important}
+  .proto{margin-bottom:0 !important;line-height:1.1 !important}
+  .hero{gap:12px !important;padding:16px !important;border-radius:18px !important}
+  .heroText{display:grid !important;grid-template-columns:1fr auto !important;column-gap:12px !important;align-items:center !important}
+  .heroText .eyebrow,.heroText h1,.heroText p,.heroText .orderChip{grid-column:1 !important}
+  .heroText .eyebrow{margin-bottom:2px !important}
+  .hero h1{font-size:24px !important;line-height:1.08 !important;margin:0 !important}
+  .hero p{font-size:12px !important;line-height:1.3 !important;margin:0 !important}
+  .orderChip{margin-top:2px !important;padding:7px 9px !important}
+  .heroBtns{grid-column:2 !important;grid-row:1 / span 4 !important;width:auto !important;display:flex !important;flex-direction:column !important;gap:7px !important;align-self:center !important}
+  .heroBtns button{min-height:34px !important;padding:0 10px !important;font-size:10px !important;white-space:nowrap !important}
+  .orderDetails{grid-column:1 / -1 !important;margin-top:2px !important;gap:6px !important}
+  .heroVisual{min-height:188px !important;gap:12px !important}
+  .core{width:118px !important;height:118px !important}
+  .core strong{font-size:26px !important}
+  .core span{bottom:28px !important;font-size:8px !important}
+  .stageList{grid-template-columns:repeat(4,minmax(0,1fr)) !important;gap:4px !important;padding-top:2px !important}
+  .stage{gap:4px !important}
+  .stage i{width:24px !important;height:24px !important}
+  .stage b{font-size:8.5px !important;line-height:1.1 !important}
+  .stage small{font-size:7px !important;line-height:1.1 !important}
+
+  .moneyGrid{gap:10px !important}
+  .walletCard,.quickBlock,.worldCard,.journeyCard,.supportCard{border-radius:14px !important;padding:12px !important}
+  .walletCard{display:grid !important;grid-template-columns:1fr auto !important;align-items:center !important;column-gap:10px !important;min-height:116px !important}
+  .walletCard .eyebrow,.walletCard .walletLabel,.walletCard > strong{grid-column:1 !important}
+  .walletCard > strong{font-size:24px !important;line-height:1 !important}
+  .currency{grid-column:2 !important;grid-row:1 / span 3 !important;align-self:center !important;display:flex !important;flex-direction:column !important}
+  .walletBtns{grid-column:1 / -1 !important;gap:6px !important}
+  .walletBtns button{min-height:32px !important;font-size:10px !important}
+
+  .quickBlock{padding:10px !important}
+  .quickBlock .sectionHead{margin-bottom:6px !important}
+  .quickGrid{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:6px !important}
+  .quickCard{min-height:82px !important;padding:8px !important;border-radius:12px !important}
+  .quickIcon{width:28px !important;height:28px !important}
+  .quickCard b{font-size:10px !important;line-height:1.1 !important}
+  .quickCard small{font-size:7px !important;line-height:1.1 !important}
+  .quickCard em{display:none !important}
+
+  .sectionTitle{margin-bottom:6px !important}
+  .sectionTitle span{font-size:14px !important}
+  .sectionTitle small{font-size:8px !important}
+
+  /* Horizontal shelves reduce page height while keeping discovery visual. */
+  .worldGrid,.productGrid{display:flex !important;overflow-x:auto !important;overflow-y:hidden !important;scroll-snap-type:x mandatory !important;gap:8px !important;padding-bottom:4px !important;scrollbar-width:none !important}
+  .worldGrid::-webkit-scrollbar,.productGrid::-webkit-scrollbar{display:none}
+  .worldCard{flex:0 0 76vw !important;max-width:290px !important;scroll-snap-align:start !important;min-height:128px !important}
+  .productCard{flex:0 0 48vw !important;max-width:190px !important;min-height:190px !important;padding:0 !important;scroll-snap-align:start !important;border-radius:14px !important}
+  .productArt{height:118px !important}
+  .productInfo{padding:8px !important;gap:5px !important}
+  .productInfo b{font-size:9px !important;line-height:1.1 !important;display:-webkit-box !important;-webkit-line-clamp:2 !important;-webkit-box-orient:vertical !important;overflow:hidden !important}
+  .productInfo small{font-size:7px !important}
+  .productInfo strong{font-size:10px !important}
+  .hoverLine{display:none !important}
+
+  .journeyGrid{grid-template-columns:1fr !important;gap:10px !important}
+  .journeyCard{min-height:0 !important}
+  .journeyItem{padding:7px 0 !important;gap:8px !important}
+  .journeyItem b{font-size:9px !important}
+  .journeyItem small{font-size:7px !important}
+  .supportCard{min-height:0 !important}
+  .supportCard h2{font-size:17px !important;line-height:1.1 !important}
+  .supportCard p{font-size:9px !important;line-height:1.35 !important;margin:4px 0 10px !important}
+  .supportBtns{gap:6px !important}
+  .supportBtns button{min-height:32px !important;font-size:9px !important;padding:0 9px !important}
+  .supportMeta{font-size:7px !important;margin-top:8px !important}
+
+  .footer{font-size:7px !important;padding-top:2px !important}
+}
+
+@media (max-width:420px){
+  .heroText{grid-template-columns:1fr !important}
+  .heroBtns{grid-column:1 !important;grid-row:auto !important;flex-direction:row !important;width:100% !important;margin-top:2px !important}
+  .heroBtns button{flex:1 !important}
+  .heroVisual{min-height:176px !important}
+  .quickGrid{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
+  .quickCard{min-height:78px !important}
+  .worldCard{flex-basis:82vw !important}
+  .productCard{flex-basis:52vw !important}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .worldGrid,.productGrid{scroll-behavior:auto !important}
+}

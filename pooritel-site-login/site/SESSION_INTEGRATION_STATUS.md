@@ -1,0 +1,1 @@
+Session integration work in progress: server session endpoint and Hub account UI are staged. The canonical Worker entry remains wrangler.jsonc until the final tree update.

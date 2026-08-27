@@ -1,0 +1,14 @@
+/* Beauty Test 05 — minimal visual pass */
+.back-core{position:fixed;inset:0;display:grid;place-items:center;pointer-events:none;z-index:0;overflow:hidden}
+.back-core .living-core{position:relative;left:50%;top:50%;transform:translate(-50%,-50%);width:min(62vw,620px);height:min(62vw,620px);opacity:.82}
+/* The background core is visual-only: no labels, metrics or interactive text. */
+.living-core .core-surface{display:none!important}
+.minimal-overview{position:relative;min-height:calc(100vh - 190px);display:flex;flex-direction:column;justify-content:center;gap:18px}
+.overview-void{min-height:180px;flex:1}
+.pagehead{padding-top:10px}
+.pagehead>div:first-child,.hero-row,.core-label{display:none!important}
+.action-ribbon{position:relative;z-index:3}
+@media (min-width:1200px){.minimal-overview{padding-top:10px}.action-ribbon{margin-top:auto}.lower{margin-bottom:4px}}
+@media (max-width:900px){.back-core .living-core{width:82vw;height:82vw}.minimal-overview{min-height:auto}.overview-void{min-height:120px}.lower{grid-template-columns:1fr!important}.action-ribbon{grid-template-columns:1fr 1fr!important}.ribbon-title{grid-column:1/-1}.top-center{display:none!important}}
+@media (max-width:560px){.action-ribbon{grid-template-columns:1fr!important}.overview-void{min-height:100px}.content{margin-left:0!important;padding:20px 16px 28px!important}.sidebar{transform:translateX(-120%);transition:transform .25s ease}.app.collapsed .sidebar{transform:translateX(-120%)}.topbar{margin:12px 12px 0}.topbar .brand small{display:none}.back-core .living-core{width:105vw;height:105vw;opacity:.58}}
+@media (prefers-reduced-motion:reduce){.back-core .living-core,.back-core .core-halo,.back-core .core-shard{animation:none!important}}

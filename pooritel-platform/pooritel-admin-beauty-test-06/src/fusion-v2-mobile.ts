@@ -1,0 +1,1 @@
+const sync=()=>{const root=document.querySelector('.app');if(!root)return;const button=document.querySelector('.sidebar-toggle') as HTMLButtonElement|null; if(!button)return;button.setAttribute('aria-label','Toggle sidebar');};sync();

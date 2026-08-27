@@ -1,5 +1,7 @@
 type AdminLang = 'en' | 'fa';
 
+let lastRadarKey = '';
+
 function isOverviewPage(): boolean {
   const root = document.querySelector('.admin-v3');
   if (!root) return false;
@@ -47,11 +49,17 @@ function cleanRadar() {
 }
 
 function addRadar() {
+  const overview = isOverviewPage();
+  const lang = currentLang();
+  const key = `${overview ? 'overview' : 'page'}:${lang}`;
+  if (key === lastRadarKey) return;
+  lastRadarKey = key;
+
   cleanRadar();
-  if (!isOverviewPage()) return;
+  if (!overview) return;
+
   const anchor = document.querySelector('.content .stack');
   if (!anchor) return;
-  const lang = currentLang();
   const t = radarText(lang);
   const section = document.createElement('section');
   section.className = 'v7-exception v10-overview-only';

@@ -1,0 +1,126 @@
+/* PooriTel Beauty Test 05 — V6 polish */
+
+/* The core is ambient art, not a data widget. Show it only while Overview is mounted. */
+.back-core{display:none!important;opacity:0;visibility:hidden;transition:opacity .55s ease}
+.app:has(.hero-row) .back-core{display:block!important;opacity:1;visibility:visible}
+
+/* Never expose a second decorative core on internal pages. */
+.placeholder-core{display:none!important}
+
+/* Remove text from the background core completely. */
+.living-core .core-surface{display:none!important}
+
+/* More cinematic core: no labels, no numbers, only material / light / motion. */
+.back-core{inset:-16vh -10vw;filter:saturate(112%)}
+.living-core{
+  width:clamp(460px,54vw,760px)!important;
+  height:clamp(460px,54vw,760px)!important;
+  left:calc(62% + var(--core-x,0px))!important;
+  top:calc(46% + var(--core-y,0px))!important;
+  transform:translate(-50%,-50%) scale(1.08)!important;
+  filter:drop-shadow(0 55px 130px rgba(48,145,130,.16)) blur(.01px)!important;
+  opacity:.96;
+}
+.living-core::before{
+  content:"";
+  position:absolute;
+  inset:5%;
+  border-radius:42% 58% 54% 46% / 46% 42% 58% 54%;
+  background:
+    radial-gradient(circle at 33% 28%,rgba(255,255,255,.22),transparent 18%),
+    radial-gradient(circle at 67% 42%,rgba(103,220,207,.24),transparent 31%),
+    radial-gradient(circle at 44% 70%,rgba(153,199,129,.16),transparent 34%),
+    conic-gradient(from 18deg,transparent 0 22%,rgba(95,210,195,.08) 28%,transparent 35%,rgba(171,210,146,.07) 54%,transparent 68%,rgba(99,212,199,.08) 79%,transparent 90%);
+  mix-blend-mode:screen;
+  filter:blur(24px);
+  animation:coreAtmos 14s ease-in-out infinite;
+}
+.living-core::after{
+  content:"";
+  position:absolute;
+  inset:11%;
+  border-radius:47% 53% 61% 39% / 41% 55% 45% 59%;
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:
+    inset 0 0 80px rgba(95,209,196,.08),
+    0 0 70px rgba(103,216,203,.08);
+  transform:rotate(-11deg);
+  animation:coreSkin 19s linear infinite reverse;
+}
+.core-halo.h1{filter:blur(34px)!important;opacity:.76!important;animation:coreBreath 7s ease-in-out infinite!important}
+.core-halo.h2{filter:blur(36px)!important;opacity:.56!important;animation:coreSpin 24s linear infinite!important}
+.core-halo.h3{filter:blur(30px)!important;opacity:.68!important;animation:corePulse 4.5s ease-in-out infinite!important}
+.core-shard{border-color:rgba(255,255,255,.28)!important;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(82,202,188,.035) 48%,rgba(156,197,126,.045))!important;box-shadow:inset 0 0 80px rgba(255,255,255,.055),0 18px 55px rgba(52,124,108,.06)!important;backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important}
+.s1{animation:shardA 10s ease-in-out infinite!important}
+.s2{animation:shardB 14s ease-in-out infinite reverse!important}
+.s3{animation:shardC 12s ease-in-out infinite .6s!important}
+
+/* Thin cinematic light leaks behind the glass UI. */
+.app::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    linear-gradient(118deg,transparent 0 34%,rgba(95,211,198,.035) 40%,transparent 50%),
+    linear-gradient(296deg,transparent 0 52%,rgba(151,196,128,.03) 61%,transparent 71%);
+  animation:lightSweep 18s ease-in-out infinite alternate;
+}
+
+/* Cleaner glass surfaces with a little more material depth. */
+.glass{
+  position:relative;
+  overflow:hidden;
+}
+.glass::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(115deg,rgba(255,255,255,.16),transparent 24%,transparent 68%,rgba(98,209,196,.05));
+  opacity:.7;
+}
+.topbar.glass::before,.sidebar.glass::before,.panel.glass::before,.action-ribbon.glass::before,.core-label.glass::before,.placeholder.glass::before,.modal-card.glass::before{
+  content:"";
+  position:absolute;
+  inset:1px;
+  border-radius:inherit;
+  pointer-events:none;
+  background:radial-gradient(420px 120px at 15% 0%,rgba(255,255,255,.16),transparent 72%);
+}
+.dark .glass::after{background:linear-gradient(115deg,rgba(255,255,255,.055),transparent 24%,transparent 68%,rgba(98,209,196,.045))}
+
+/* Give important interactive UI a subtle magnetic glow. */
+.action-node,.glass-btn,.store,.nav button,.decision,.primary,.toggle,.close{transition:transform .26s cubic-bezier(.2,.8,.2,1),box-shadow .26s ease,border-color .26s ease,background .26s ease}
+.action-node:hover,.nav button:hover,.decision:hover,.glass-btn:hover,.toggle:hover,.primary:hover{transform:translateY(-2px)}
+.action-node:hover{box-shadow:0 18px 44px rgba(77,168,151,.13),inset 0 0 0 1px rgba(105,217,204,.12)}
+.store:hover{transform:translateY(-2px) scale(1.015);box-shadow:0 16px 36px rgba(95,202,187,.22)}
+
+/* A quiet active indicator on navigation instead of a heavy filled block. */
+.nav button.active{box-shadow:inset 2px 0 0 rgba(97,207,193,.85),inset 0 0 0 1px rgba(97,207,193,.08)!important}
+
+@keyframes coreAtmos{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(18px,-14px,0) scale(1.035)}}
+@keyframes coreSkin{0%{transform:rotate(-11deg) scale(1)}50%{transform:rotate(4deg) scale(1.035)}100%{transform:rotate(-11deg) scale(1)}}
+@keyframes coreBreath{0%,100%{transform:scale(.98);opacity:.68}50%{transform:scale(1.045);opacity:.9}}
+@keyframes coreSpin{to{transform:rotate(360deg)}}
+@keyframes corePulse{0%,100%{transform:scale(.97);opacity:.58}50%{transform:scale(1.06);opacity:.82}}
+@keyframes shardA{0%,100%{transform:translate(-50%,-50%) rotate(18deg) translate3d(0,0,0)}50%{transform:translate(-50%,-50%) rotate(24deg) translate3d(10px,-7px,0)}}
+@keyframes shardB{0%,100%{transform:translate(-50%,-50%) rotate(-54deg) scale(.78) translate3d(0,0,0)}50%{transform:translate(-50%,-50%) rotate(-47deg) scale(.82) translate3d(-7px,9px,0)}}
+@keyframes shardC{0%,100%{transform:translate(-50%,-50%) rotate(84deg) scale(.62) translate3d(0,0,0)}50%{transform:translate(-50%,-50%) rotate(75deg) scale(.66) translate3d(6px,4px,0)}}
+@keyframes lightSweep{0%{opacity:.35;transform:translate3d(-1.5%,0,0)}100%{opacity:.75;transform:translate3d(1.5%,-1%,0)}}
+
+@media(max-width:980px){
+  .living-core{left:69%!important;top:43%!important;transform:translate(-50%,-50%) scale(.92)!important;opacity:.62}
+  .back-core{inset:-10vh -20vw}
+}
+@media(max-width:720px){
+  .app::before{opacity:.55}
+  .living-core{left:75%!important;top:34%!important;transform:translate(-50%,-50%) scale(.68)!important;opacity:.42}
+  .topbar.glass::before,.sidebar.glass::before,.panel.glass::before,.action-ribbon.glass::before,.core-label.glass::before,.placeholder.glass::before,.modal-card.glass::before{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .living-core::before,.living-core::after,.core-halo,.core-shard,.app::before{animation:none!important}
+  .action-node,.glass-btn,.store,.nav button,.decision,.primary,.toggle,.close{transition:none!important}
+}

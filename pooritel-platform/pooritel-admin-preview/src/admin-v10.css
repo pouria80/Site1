@@ -1,10 +1,15 @@
-/* PooriTel Admin V10 — stable modal, overview-only radar, bounded scrolling */
-.admin-v3{overflow:hidden!important}
+/* PooriTel Admin V11 cleanup — global scroll lock + remove legacy Flow presentation */
+html,body,#root{width:100%;height:100%;margin:0!important;padding:0!important;overflow:hidden!important}
+.admin-v3{width:100%;height:100vh!important;min-height:100vh!important;overflow:hidden!important}
 .admin-v3 .main{height:100vh!important;min-height:0!important;overflow:hidden!important}
-.admin-v3 .content{height:calc(100vh - 76px)!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;padding-bottom:24px!important;scrollbar-gutter:stable}
+.admin-v3 .content{height:calc(100vh - 76px)!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;padding-bottom:20px!important;scrollbar-gutter:stable}
 .admin-v3 .content>.stack{min-height:0!important}
+/* The legacy Flow panel is no longer part of the active Admin Overview UI. */
+.admin-v3 .lower>section:first-child{display:none!important}
+.admin-v3 .lower{grid-template-columns:minmax(0,1fr)!important}
+.admin-v3 .lower:has(>section:only-child){grid-template-columns:minmax(0,1fr)!important}
 
-/* One modal model: centered in the viewport and independent of the app layout. */
+/* Modal remains centered in the viewport and independent of page layout. */
 .admin-v3 .decision-modal,
 .admin-v3 .drawer.v10-modal,
 .admin-v3 .decision-drawer.v10-modal{position:fixed!important;inset:0!important;z-index:500!important;display:grid!important;place-items:center!important;padding:24px!important;margin:0!important;transform:none!important}
@@ -23,12 +28,10 @@
 .admin-v3 .drawer.v10-modal>.drawerpanel:before,
 .admin-v3 .decision-drawer.v10-modal>.drawer-panel:before,
 .admin-v3 .v10-modal-panel:before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(520px 230px at 8% 0%,rgba(92,224,214,.13),transparent 68%),radial-gradient(520px 250px at 100% 100%,rgba(169,201,146,.12),transparent 72%)}
-.admin-v3 .decision-modal-panel>* ,
-.admin-v3 .drawer.v10-modal>.drawerpanel>* ,
-.admin-v3 .decision-drawer.v10-modal>.drawer-panel>* ,
+.admin-v3 .decision-modal-panel>*,
+.admin-v3 .drawer.v10-modal>.drawerpanel>*,
+.admin-v3 .decision-drawer.v10-modal>.drawer-panel>*,
 .admin-v3 .v10-modal-panel>*{position:relative;z-index:1}
-
-/* Keep a safe title lane for the close button. */
 .admin-v3 .decision-modal-panel h1,
 .admin-v3 .decision-modal-panel h2,
 .admin-v3 .drawer.v10-modal>.drawerpanel h1,
@@ -45,32 +48,8 @@
 .admin-v3 .drawer.v10-modal>.drawerpanel>.close:hover,
 .admin-v3 .decision-drawer.v10-modal>.drawer-panel>.close:hover,
 .admin-v3 .v10-modal-panel>.close:hover{border-color:rgba(27,178,168,.28)!important;box-shadow:0 12px 30px rgba(27,178,168,.14)!important}
-
-/* Radar exists on Overview only. */
 .admin-v3.v10-not-overview .v7-exception{display:none!important}
 .admin-v3 .v7-exception.v10-overview-only{display:block}
-
 @keyframes v10ModalIn{from{opacity:0;transform:translateY(12px) scale(.965);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
-@media(max-width:780px){
-  .admin-v3 .content{height:calc(100vh - 64px)!important;padding:16px 14px 18px!important}
-  .admin-v3 .decision-modal,
-  .admin-v3 .drawer.v10-modal,
-  .admin-v3 .decision-drawer.v10-modal{padding:12px!important}
-  .admin-v3 .decision-modal-panel,
-  .admin-v3 .drawer.v10-modal>.drawerpanel,
-  .admin-v3 .decision-drawer.v10-modal>.drawer-panel,
-  .admin-v3 .v10-modal-panel{width:calc(100vw - 24px)!important;max-width:none!important;max-height:92vh!important;padding:24px 18px 20px!important;border-radius:22px!important}
-  .admin-v3 .decision-modal-panel h1,
-  .admin-v3 .decision-modal-panel h2,
-  .admin-v3 .drawer.v10-modal>.drawerpanel h1,
-  .admin-v3 .drawer.v10-modal>.drawerpanel h2,
-  .admin-v3 .decision-drawer.v10-modal>.drawer-panel h1,
-  .admin-v3 .decision-drawer.v10-modal>.drawer-panel h2,
-  .admin-v3 .v10-modal-panel h1,
-  .admin-v3 .v10-modal-panel h2{padding-right:50px!important}
-  .admin-v3 .decision-modal-panel>.close,
-  .admin-v3 .drawer.v10-modal>.drawerpanel>.close,
-  .admin-v3 .decision-drawer.v10-modal>.drawer-panel>.close,
-  .admin-v3 .v10-modal-panel>.close{top:12px!important;right:12px!important;width:38px!important;height:38px!important}
-}
+@media(max-width:780px){html,body,#root{overflow:hidden!important}.admin-v3 .content{height:calc(100vh - 64px)!important;padding:16px 14px 18px!important}.admin-v3 .decision-modal,.admin-v3 .drawer.v10-modal,.admin-v3 .decision-drawer.v10-modal{padding:12px!important}.admin-v3 .decision-modal-panel,.admin-v3 .drawer.v10-modal>.drawerpanel,.admin-v3 .decision-drawer.v10-modal>.drawer-panel,.admin-v3 .v10-modal-panel{width:calc(100vw - 24px)!important;max-width:none!important;max-height:92vh!important;padding:24px 18px 20px!important;border-radius:22px!important}.admin-v3 .decision-modal-panel h1,.admin-v3 .decision-modal-panel h2,.admin-v3 .drawer.v10-modal>.drawerpanel h1,.admin-v3 .drawer.v10-modal>.drawerpanel h2,.admin-v3 .decision-drawer.v10-modal>.drawer-panel h1,.admin-v3 .decision-drawer.v10-modal>.drawer-panel h2,.admin-v3 .v10-modal-panel h1,.admin-v3 .v10-modal-panel h2{padding-right:50px!important}.admin-v3 .decision-modal-panel>.close,.admin-v3 .drawer.v10-modal>.drawerpanel>.close,.admin-v3 .decision-drawer.v10-modal>.drawer-panel>.close,.admin-v3 .v10-modal-panel>.close{top:12px!important;right:12px!important;width:38px!important;height:38px!important}}
 @media(prefers-reduced-motion:reduce){.admin-v3 .decision-modal-panel,.admin-v3 .drawer.v10-modal>.drawerpanel,.admin-v3 .decision-drawer.v10-modal>.drawer-panel,.admin-v3 .v10-modal-panel{animation:none!important}}
